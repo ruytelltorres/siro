@@ -1,0 +1,284 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Reportes - Mapa de Riesgo";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+<style>
+    .alert {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius" data-collapsed="0">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Mapa de calor de los riesgos</h4>
+                <span>M&oacute;dulo para la generaci&oacute;n de mapas de calos para los riesgos operacionales o autoevaluaciones</span>
+            </div>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse" class="btn-panel-filter" role="button" title="Mostrar u ocultar filtros" aria-label="Mostrar u ocultar filtros"><i class="fa fa-filter" aria-hidden="true"></i></a>
+                @*<a href="javascript:CargarDatosTabla()"><i class="entypo-arrows-ccw"></i></a>*@
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="control-label">Tipo de riesgo</label>
+                    <select id="selTpoRiesgo" class="selectboxit" data-first-option="false">
+                        <option>Seleccione una opci&oacute;n</option>
+                        <option value="1" selected>Riesgo Operacional</option>
+                        <option value="2">Autoevaluaciones</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="control-label">Nivel del riesgo</label>
+                    <select id="selNivelRiesgo" class="selectboxit" data-first-option="false">
+                        <option>Seleccione una opci&oacute;n</option>
+                        <option value="1" selected>Inherente</option>
+                        <option value="2">Residual</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label>&nbsp;</label>
+                    <br />
+                    <div class="btn-group left-dropdown">
+                        <button type="button" class="btn btn-primary">Acciones</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                                <a href="javascript:GenerarMapaCalorRiesgo()"><i class="fa fa-cubes"></i> Generar Mapa</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:ExportarExcelRiesgosMapaCalor()"><i class="fa fa-file-excel-o"></i> Exportar Excel</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:ExportarTabla('#tbl-mapa-riesgo')"><i class="fa fa-file-image-o"></i> Exportar PNG</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#" onclick="ExportarRiesgosNivelRiesgo(1)">
+                    <div class="tile-stats mapa-calor-bajo">
+                        <div class="icon"><i class="entypo-gauge"></i></div>
+                        <div class="num" id="TotNivRiesgoBajo">0</div>
+                        <h3>Riesgo Bajo</h3>
+
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="#" onclick="ExportarRiesgosNivelRiesgo(2)">
+                    <div class="tile-stats mapa-calor-moderado">
+                        <div class="icon"><i class="entypo-gauge"></i></div>
+                        <div class="num" id="TotNivRiesgoModerado">0</div>
+                        <h3>Riesgo Moderado</h3>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="#" onclick="ExportarRiesgosNivelRiesgo(3)">
+                    <div class="tile-stats mapa-calor-alto">
+                        <div class="icon"><i class="entypo-gauge"></i></div>
+                        <div class="num" id="TotNivRiesgoAlto">0</div>
+                        <h3>Riesgo Alto</h3>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="#" onclick="ExportarRiesgosNivelRiesgo(4)">
+                    <div class="tile-stats mapa-calor-extremo">
+                        <div class="icon"><i class="entypo-gauge"></i></div>
+                        <div class="num" id="TotNivRiesgoExtremo">0</div>
+                        <h3>Riesgo Extremo</h3>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-12">
+                <table id="tbl-mapa-riesgo" class="table-bordered" style="height: 296px; width: 100%; border-collapse:collapse; background-color:white;">
+                    <tr>
+                        <td colspan="2" rowspan="2" width="15%" class="tbl-diagonal"></td>
+                        <td align="center" colspan="7" style="background-color:white"><strong>Impacto</strong></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="center"><strong>Insignificante</strong><br /><span>(0.15 %)</span></td>
+                        <td width="15%" align="center"><strong>Menor</strong><br /><span>(0.60 %)</span></td>
+                        <td width="15%" align="center"><strong>Moderado</strong><br /><span>(2.00 %)</span></td>
+                        <td width="15%" align="center"><strong>Mayor</strong><br /><span>(4.00 %)</span></td>
+                        <td width="15%" align="center"><strong>Catastrófico</strong><br /><span>(6.00 %)</span></td>
+                    </tr>
+                    <tr>
+                        <td align="center" rowspan="5" class="rotate-text"><strong>Probabilidad</strong></td>
+                        <td align="center" width="10%" style="background-color:white"><strong>Casi certeza</strong></td>
+                        <td class="mapa-calor-moderado" align="center"><a id="lnk-cel-11" href="javascript:MostrarDatosRiesgo(1, 1)"></a></td>
+                        <td class="mapa-calor-alto" align="center"><a id="lnk-cel-12" href="javascript:MostrarDatosRiesgo(1, 2)"></a></td>
+                        <td class="mapa-calor-extremo" align="center"><a id="lnk-cel-13" style="color:white;" href="javascript:MostrarDatosRiesgo(1, 3)"></a></td>
+                        <td class="mapa-calor-extremo" align="center"><a id="lnk-cel-14" style="color:white;" href="javascript:MostrarDatosRiesgo(1, 4)"></a></td>
+                        <td class="mapa-calor-extremo" align="center"><a id="lnk-cel-15" style="color:white;" href="javascript:MostrarDatosRiesgo(1, 5)"></a></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><strong>Probable</strong></td>
+                        <td id="tbl-cel-2" class="mapa-calor-moderado" align="center"><a id="lnk-cel-21" href="javascript:MostrarDatosRiesgo(2, 1)"></a></td>
+                        <td id="tbl-cel-7" class="mapa-calor-alto" align="center"><a id="lnk-cel-22" href="javascript:MostrarDatosRiesgo(2, 2)"></a></td>
+                        <td id="tbl-cel-12" class="mapa-calor-alto" align="center"><a id="lnk-cel-23" href="javascript:MostrarDatosRiesgo(2, 3)"></a></td>
+                        <td id="tbl-cel-17" class="mapa-calor-extremo" align="center"><a id="lnk-cel-24" style="color:white;" href="javascript:MostrarDatosRiesgo(2, 4)"></a></td>
+                        <td id="tbl-cel-22" class="mapa-calor-extremo" align="center"><a id="lnk-cel-25" style="color:white;" href="javascript:MostrarDatosRiesgo(2, 5)"></a></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><strong>Moderado</strong></td>
+                        <td id="tbl-cel-3" class="mapa-calor-bajo" align="center"><a id="lnk-cel-31" style="color:white;" href="javascript:MostrarDatosRiesgo(3, 1)"></a></td>
+                        <td id="tbl-cel-8" class="mapa-calor-moderado" align="center"><a id="lnk-cel-32" href="javascript:MostrarDatosRiesgo(3, 1)"></a></td>
+                        <td id="tbl-cel-13" class="mapa-calor-alto" align="center"><a id="lnk-cel-33" href="javascript:MostrarDatosRiesgo(3, 3)"></a></td>
+                        <td id="tbl-cel-18" class="mapa-calor-extremo" align="center"><a id="lnk-cel-34" style="color:white;" href="javascript:MostrarDatosRiesgo(3, 4)"></a></td>
+                        <td id="tbl-cel-23" class="mapa-calor-extremo" align="center"><a id="lnk-cel-35" style="color:white;" href="javascript:MostrarDatosRiesgo(3, 5)"></a></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><strong>Improbable</strong></td>
+                        <td id="tbl-cel-4" class="mapa-calor-bajo" align="center"><a id="lnk-cel-41" style="color:white;" href="javascript:MostrarDatosRiesgo(4, 1)"></a></td>
+                        <td id="tbl-cel-9" class="mapa-calor-bajo" align="center"><a id="lnk-cel-42" style="color:white;" href="javascript:MostrarDatosRiesgo(4, 2)"></a></td>
+                        <td id="tbl-cel-14" class="mapa-calor-moderado" align="center"><a id="lnk-cel-43" href="javascript:MostrarDatosRiesgo(4, 3)"></a></td>
+                        <td id="tbl-cel-19" class="mapa-calor-alto" align="center"><a id="lnk-cel-44" href="javascript:MostrarDatosRiesgo(4, 4)"></a></td>
+                        <td id="tbl-cel-24" class="mapa-calor-extremo" align="center"><a id="lnk-cel-45" style="color:white;" href="javascript:MostrarDatosRiesgo(4, 5)"></a></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><strong>Raro</strong></td>
+                        <td id="tbl-cel-5" class="mapa-calor-bajo" align="center"><a id="lnk-cel-51" style="color:white;" href="javascript:MostrarDatosRiesgo(5, 1)"></a></td>
+                        <td id="tbl-cel-10" class="mapa-calor-bajo" align="center"><a id="lnk-cel-52" style="color:white;" href="javascript:MostrarDatosRiesgo(5, 2)"></a></td>
+                        <td id="tbl-cel-15" class="mapa-calor-moderado" align="center"><a id="lnk-cel-53" href="javascript:MostrarDatosRiesgo(5, 3)"></a></td>
+                        <td id="tbl-cel-20" class="mapa-calor-alto" align="center"><a id="lnk-cel-54" href="javascript:MostrarDatosRiesgo(5, 4)"></a></td>
+                        <td id="tbl-cel-25" class="mapa-calor-alto" align="center"><a id="lnk-cel-55" href="javascript:MostrarDatosRiesgo(5, 5)"></a></td>
+                    </tr>
+                </table>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Nivele de Riesgo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul class="list-inline links-list">
+                                    <li>
+                                        <div class="label label-default mapa-calor-bajo" style="width:20px; height:18px">&nbsp;</div>
+                                        <span>Bajo</span>
+                                    </li>
+                                    <li class="sep"></li>
+                                    <li>
+                                        <div class="label label-default mapa-calor-moderado" style="width:20px; height:18px">&nbsp;</div>
+                                        <span>Moderado</span>
+                                    </li>
+                                    <li class="sep"></li>
+                                    <li>
+                                        <div class="label label-default mapa-calor-alto" style="width:20px; height:18px">&nbsp;</div>
+                                        <span>Alto</span>
+                                    </li>
+                                    <li class="sep"></li>
+                                    <li>
+                                        <div class="label label-default mapa-calor-extremo" style="width:20px; height:18px">&nbsp;</div>
+                                        <span>Extremo</span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @*<div class="panel-footer" style="padding-left:30px; padding-right:30px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-left">
+
+                    </div>
+                    <div class="pull-right">
+                        <button id="btnRegRiesgoOpe" type="button" class="btn btn-primary btn-block btn-icon">Guardar<i class="entypo-floppy"></i></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+
+
+
+<div class="modal fade custom-width" id="InfoRiesgoNivelRiesgo">
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+                <h3 class="modal-title"><strong>Riesgo Operacional</strong></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="alert alert-minimal">
+                            <p>Probabilidad</p>
+                            <h3 style="margin-top: 5px" class="title valProbalididad" nProbabilidad="0"></h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="alert alert-minimal">
+                            <p>Impacto</p>
+                            <h3 style="margin-top: 5px" class="title valImpacto" nImpacto="0"></h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="alert alert-minimal">
+                            <button type="button" class="btn btn-primary" id="btnExportar">Exportar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="tbl-riesgos-nivel-riesgo"></div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Exportar</button>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-primary" id="btnExprotar">Exportar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+<script src="@Url.Content("~/Content/Assets/js/tablexport/filesaver.min.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/tablexport/html2canvas.min.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/tablexport/tableExport.min.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/reporte.mapa.js")"></script>
+

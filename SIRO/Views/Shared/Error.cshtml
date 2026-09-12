@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = Model.Titulo;
+}
+<style>
+    .tile-stats .icon {
+        color: rgba(0, 0, 0, 0.1);
+        position: absolute;
+        right: 5px;
+        bottom: 40px;
+        z-index: 1;
+    }
+
+    .tile-stats .num h3 {
+        font-size: 28px;
+        font-weight: bold;
+    }
+</style>
+<div class="row">
+    <div class="tile-stats tile-white tile-white-primary" style="background-color: #FFF">
+        <div class="icon"><i class="@Model.IconoError"></i></div>
+        <div class="num">
+            @*<h3>@Model.Titulo <small>@String.Format("({0}) ", Model.CodigoError)</small></h3>*@
+            <h3>@Model.Titulo</h3>
+        </div>
+        <h5>@Model.MensajeError</h5>
+        @*<p>@Model.MensajeError</p>*@
+    </div>
+</div>

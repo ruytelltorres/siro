@@ -1,0 +1,194 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@using SIRO.Utils.Constantes
+@{
+    ViewBag.Title = "Monitorear Evaluación";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+    var gModelo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+
+<div class="row">
+    <div class="col-md-12">
+        <!--Añadir shadow-panel , para agregar afecto de sobra al modulo-->
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Monitorear Autoevaluaci&oacute;n</h3>
+                    <span>M&oacute;dulo para el monitoreo de las autoevaluaciones asignados a un taller</span>
+                </div>
+            </div>
+            <div class="panel-body" style="background:#fff">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <label for="selUsuarios" class="control-label">Usuarios</label>
+                            <select id="selUsuarios" class="select2" style="width:100%" tabindex="2"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="selTaller" class="control-label">Taller</label>
+                            <select id="selTaller" class="select2" style="width:100%" tabindex="3"></select>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    Evaluaciones
+                                </div>
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>*@
+
+                <div class="col-md-12" style="padding-top: 10px">
+                    <div id="content-tbl-evaluaciones-monitoreo"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="padding-top: 5px">
+                        <div class="col-md-12" id="pnlDetTaller">
+                            <div class="panel-group joined" id="accordion-test-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-test-2" href="#collapseTwo-2" class="collapsed">Detalle del Taller</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo-2" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table class="table-bordered" style="width: 100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="col-lg-3 trTitulo"><strong>Código Taller</strong></td>
+                                                        <td class="col-lg-3 trValor" id="tdCodTaller"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-lg-3 trTitulo"><strong>Estado del Taller</strong></td>
+                                                        <td class="col-lg-3 trValor" id="tdEstadoTaller"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="col-lg-3 trTitulo"><strong>F. Creaci&oacute;n</strong></td>
+                                                        <td class="col-lg-3 trValor" id="tdFechaCrea"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @if (usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO)
+            {
+                <div class="panel-footer" style="padding:30px">
+                    <div class="row">
+                        <div class="col-md-6 pull-left">
+                            <button type="button" id="btnNotificarUser" name="btnNotificarUser" class="btn btn-primary" tabindex="10" disabled>Finalizar Taller</button>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            @*<button type="button" id="btnRegEvaluacion" name="btnRegEvaluacion" class="btn btn-primary" tabindex="9">Guardar</button>
+                                <button type="button" id="btnCancelar" name="btnCancelar" class="btn btn-primary" tabindex="8">Cancelar</button>*@
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+@*<div class="modal fade custom-width" id="ModalFiltroTpoEval" data-backdrop="static">
+        <div class="modal-dialog" style="width: 30%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><strong>Autoevaluaci&oacute;n</strong></h3>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal form-groups-bordered">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="selTpoEvaluacion">Autovaluaci&oacute;n</label>
+                            <div class="col-md-9">
+                                <select id="selTpoEvaluacion" class="selectboxit" data-size="8" data-first-option="false" style="width:30%" @(usuario.cRHCargoCod != ConstGeneral.Get.AnalistaRO ? "disabled" : string.Empty)>
+                                    <option>Seleccione opci&oacute;n</option>
+                                    @{
+                                        foreach (var _Evaluacion in Model.oLstEvaluacion)
+                                        {
+                                            if (usuario.cRHCargoCod != ConstGeneral.Get.AnalistaRO && _Evaluacion.nCodEval == 1001)
+                                            {
+                                                <option value="@_Evaluacion.nCodEval" selected>@_Evaluacion.cEvalDesc</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@_Evaluacion.nCodEval">@_Evaluacion.cEvalDesc</option>
+                                            }
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="sec-filtro-areas">
+                            <label class="col-md-3 control-label" for="selAreas">&Aacute;rea</label>
+                            <div class="col-md-9">
+                                <select id="selAreas" class="selectboxit" data-size="8" data-first-option="false" style="width:30%" @(usuario.cRHCargoCod != ConstGeneral.Get.AnalistaRO ? "disabled" : string.Empty)>
+                                    <option>Seleccione opci&oacute;n</option>
+                                    @{
+                                        foreach (var areas in @Model.oLstAreas)
+                                        {
+                                            if (areas.cAreaCod == usuario.oAreas.cAreaCod && usuario.cRHCargoCod != ConstGeneral.Get.AnalistaRO)
+                                            {
+                                                <option value=@areas.cAreaCod @(usuario.cRHCargoCod != ConstGeneral.Get.AnalistaRO ? "selected" : string.Empty)>@areas.cAreaDescripcion</option>
+                                            }
+                                            else
+                                            {
+                                                <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                                            }
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="sec-filtro-procesos">
+                            <label class="col-md-3 control-label" for="selProcesos">Proceso</label>
+                            <div class="col-md-9">
+                                <select id="selProcesos" class="selectboxit" data-size="8" data-first-option="false" style="width:30%"></select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="sec-filtro-subprocesos">
+                            <label class="col-md-3 control-label" for="selSubProcesos">Sub Proceso</label>
+                            <div class="col-md-9">
+                                <select id="selSubProcesos" class="selectboxit" data-size="8" data-first-option="false" style="width:30%"></select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-left">
+                        <button type="button" class="btn btn-default" id="btnCerrarFiltro" data-dismiss="modal">Cerrar</button>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary" id="btnEnvioFiltro">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+<script src="@Url.Content("~/Content/Assets/js/siro/evaluacion.monitorear.js")"></script>

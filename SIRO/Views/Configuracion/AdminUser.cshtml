@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Permisos de Usuarios";
+
+}
+<link rel="stylesheet" href="@Url.Content("~/Content/Assets/css/bootstrap-treeview.css")">
+
+<div class="row">
+    <div class="gallery-env">
+        @*<div class="col-sm-12">
+                <h3>Administraci&oacute;n de Usuarios</h3>
+                <hr />
+                <div class="image-categories">
+                    <span>Mostrar :</span>
+                    <a href="#" onclick="ContraerExpandirMenu(1)">Todo</a> /
+                    <a href="#" onclick="ContraerExpandirMenu(2)">Principales</a>
+                </div>
+            </div>*@
+
+        <div class="tile-block tile-primary" id="ListaCargos" style="background-color: white !important; border: 1px solid #EBEBEB">
+            <div class="tile-header" style="border-bottom: 1px solid #E9E9E9">
+                <h3><strong>Administraci&oacute;n de Usuarios</strong></h3>
+                @*<a href="#" onclick="AgregarCargoOpcion()"><i class="entypo-list-add" style="color: #373E4A !important;"></i></a>
+                    <a href="#" onclick="ContraerExpandirMenu(1)"><i class="entypo-down-dir" style="color: #373E4A !important;"></i></a>*@
+                @*<a href="#" style="color: #373E4A !important;">*@
+
+                @*<span style="color: #373E4A !important;">Lista de cargos permitidos.</span>*@
+                @*</a>*@
+            </div>
+
+            <div class="tile-content" style="background-color:white;color: black;">
+                @*<div class="row">
+                        <div class="col-md-6">
+                            <div id="content-grupos"></div>
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="selGrupos" class="control-label">Grupos</label>
+                            <select id="selGrupos" class="select2" style="width:100%"></select>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+                            <div class="form-group">
+                                <label for="selUsuarios" class="control-label">Usuarios</label>
+                                <select id="selUsuarios" class="select2" style="width:100%"></select>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h4><strong>Men&uacute; del Usuario</strong></h4> </div>
+                                <div class="panel-options">
+                                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                                    <a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+                                    <a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+                                </div>
+                            </div>
+                            <div id="MenuSistema"></div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-6 col-sm-6">*@
+                    @*<input type="text" class="form-control" placeholder="Agregar cargo" />*@
+                    @*<ul class="todo-list"></ul>
+                        </div>*@
+                </div>
+
+
+
+            </div>
+
+            @*<div class="tile-footer">
+                    <a href="#">View all tasks</a>
+                </div>*@
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+<div class="modal fade custom-width" id="ModalAdmiteCargo">
+    <div class="modal-dialog" style="width: 50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title"><strong>Criterios Evalución</strong></h3>
+            </div>
+            <div class="modal-body">
+                <form id="form-reg-criterios-eval" method="post" action="" class="validate">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="selRC" class="control-label">Responsable Ejecución(RC)</label>
+                                <select id="selRC" class="selectboxit" data-size="8" data-first-option="false"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selFD" class="control-label">Periodo de Ejecución(FD)</label>
+                                <select id="selFD" class="selectboxit" data-size="8" data-first-option="false"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selED" class="control-label">Evidencia del Control(ED)</label>
+                                <select id="selED" class="selectboxit" data-size="8" data-first-option="false"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="selTC" class="control-label">Tipo de Ejecución(TC)</label>
+                                <select id="selTC" class="selectboxit" data-size="8" data-first-option="false"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selCO" class="control-label">Cumple Objetivo(CO)</label>
+                                <select id="selCO" class="selectboxit" data-size="8" data-first-option="false"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="tile-stats tile-white">
+                                <div class="icon"><i class="entypo-gauge nivel-efectividad"></i></div>
+                                <div id="DescEfectividadControl" class="num">&nbsp;</div>
+                                <h3>Efectividad del control</h3>
+                                <p>Nivel de la efectividad de control</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnCerrar" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnAdmiteCargoOpcion">Grabar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="@Url.Content("~/Content/Assets/js/bootstrap-treeview.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/config.admin.usuarios.js")"></script>
+
+
+

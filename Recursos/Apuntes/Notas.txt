@@ -1,0 +1,1 @@
+El aplicativo debe estar instado en un servidor que cuente con NET Framework 4.7 o superior

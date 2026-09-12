@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Informe Evento Pérdida";
+}
+<script type="text/javascript">
+    var gToken = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.TOKEN));
+    @*var gToken = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));*@
+</script>
+
+
+<link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/powerbi/powerbi.css")" />
+@*<script src="@Url.Content("~/Content/Assets/js/powerbi/index.js")"></script>*@
+<script src="@Url.Content("~/Content/Assets/js/powerbi/powerbi.min.js")"></script>
+
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h3>Informes - Servicio de Power BI</h3>
+                <span>Visualize los informes din&aacute;micos para la toma de desiciones</span>
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff;">
+            <div id="error-container">
+            </div>
+            <!-- Placeholder div when Power BI report is not embedded -->
+            <div class="report-wrapper col-lg-12 col-md-12 mt-12">
+                @*<img src="~/Content/Assets/js/powerbi/img/spinner.svg" id="report-spinner" class="spinner col-lg-12 col-md-12" alt="loader">*@
+                <div id="report-container" class="report-container col-lg-12 col-md-12 mt-12"></div>
+                @*<div class="report-display-text col-lg-12 col-md-12">Seleccione estapacie de trabajo e informe</div>*@
+            </div>
+            <!-- Placeholder div when Power BI dashboard is not embedded -->
+            <div class="dashboard-wrapper col-lg-12 col-md-12 mt-12" hidden>
+                @*<img src="~/Content/Assets/js/powerbi/img/spinner.svg" id="dashboard-spinner" class="spinner col-lg-12 col-md-12" alt="loader">*@
+                <div id="dashboard-container" class="dashboard-container col-lg-12 col-md-12 mt-12"></div>
+                @*<div class="dashboard-display-text col-lg-12 col-md-12">Seleccione estapacie de trabajo e informe</div>*@
+            </div>
+            <!-- Placeholder div when Power BI tile is not embedded -->
+            <div class="tile-wrapper col-lg-12 col-md-12 mt-12" hidden>
+                @*<img src="~/Content/Assets/js/powerbi/img/spinner.svg" id="tile-spinner" class="spinner col-lg-12 col-md-12" alt="loader">*@
+                <div id="tile-container" class="tile-container col-lg-12 col-md-12 mt-12"></div>
+                @*<div class="tile-display-text col-lg-12 col-md-12">Seleccione estapacie de trabajo e informe</div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+        // Get a reference to the embedded report HTML element
+        const reportContainer = $('#report-container')[0];
+
+        // Read embed application token from Model
+        const accessToken = "@Model.EmbedToken.Token";
+
+        // You can embed different reports as per your need by changing the index
+        // Read embed URL from Model
+        const embedUrl = "@Html.Raw(Model.EmbedReports[0].EmbedUrl)";
+
+        // Read report Id from Model
+        const embedReportId = "@Model.EmbedReports[0].ReportId";
+
+        // Use the token expiry to regenerate Embed token for seamless end user experience
+        // Refer https://aka.ms/RefreshEmbedToken
+        const tokenExpiry = "@Model.EmbedToken.Expiration";
+
+        // Get models. models contains enums that can be used.
+        const models = window['powerbi-client'].models;
+        const embedType = "report";
+
+        // Embed configuration used to describe the what and how to embed.
+        // This object is used when calling powerbi.embed.
+        // This also includes settings and options such as filters.
+        // You can find more information at https://github.com/Microsoft/PowerBI-JavaScript/wiki/Embed-Configuration-Details.
+        const config = {
+            //type: 'report',
+            type: embedType,
+            tokenType: models.TokenType.Embed,
+            accessToken: accessToken,
+            embedUrl: embedUrl,
+            //id: embedReportId,
+            //permissions: models.Permissions.All,
+            //settings: {
+            //    // Enable this setting to remove gray shoulders from embedded report
+            //    // background: models.BackgroundType.Transparent,
+            //    filterPaneEnabled: true,
+            //    navContentPaneEnabled: true
+            //}
+        };
+
+
+
+        // Embed the report and display it within the div container.
+        const report = powerbi.embed(reportContainer, config);
+</script>
+
+

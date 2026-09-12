@@ -1,0 +1,43 @@
+@font-face {
+    font-family: 'font-siro';
+    src: url('fonts/font-siro.eot?mfro2v');
+    src: url('fonts/font-siro.eot?mfro2v#iefix') format('embedded-opentype'), url('fonts/font-siro.ttf?mfro2v') format('truetype'), url('fonts/font-siro.woff?mfro2v') format('woff'), url('fonts/font-siro.svg?mfro2v#font-siro') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="siro-"], [class*=" siro-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'font-siro' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 16px;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.siro-save-1:before {
+    content: "\e900";
+}
+
+.siro-save-2:before {
+    content: "\e901";
+}
+
+.siro-save-3:before {
+    content: "\e902";
+}
+
+.siro-save-4:before {
+    content: "\e903";
+}
+
+.siro-save-5:before {
+    content: "\e904";
+}

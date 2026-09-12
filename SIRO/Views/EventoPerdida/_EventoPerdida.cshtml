@@ -1,0 +1,667 @@
+﻿
+<form role="form" class="form-wizard" style="margin-top:0">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="inEventoDesc" class="control-label">Evento de P&eacute;rdida</label>
+                <textarea class="form-control scrolltextarea" id="inEventoDesc" data-validate="minlength[10]" rows="5" placeholder="Descriopción del Evento de Pérdida" style="width:100%" tabindex="1">@(Model.oEventoPerdida != null ? Model.oEventoPerdida.oDatosRiesgo.cRiesgoIdentiticado : String.Empty)</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="inMedidasCorrectivas" class="control-label">Medidas Correctivas</label>
+                <textarea class="form-control scrolltextarea" id="inMedidasCorrectivas" name="inMedidasCorrectivas" data-validate="minlength[10]" rows="5" placeholder="(Opcional) Describa las medidas correctivas realizadas" style="width:100%" tabindex="1">@(Model.oEventoPerdida != null ? Model.oEventoPerdida.cMedidasCorrectivas : String.Empty)</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="inAccionesRealizadas" class="control-label">Acciones Realizadas</label>
+                <textarea class="form-control scrolltextarea" id="inAccionesRealizadas" name="inAccionesRealizadas" data-validate="minlength[10]" rows="5" placeholder="(Opcional) Describa las acciones tomadas" style="width:100%" tabindex="2">@(Model.oEventoPerdida != null ? Model.oEventoPerdida.cAccionesRealizada : String.Empty)</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="selDescCortaEvento" class="control-label">Descripci&oacute;n Corta</label>
+                <select id="selDescCortaEvento" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                    <option>Seleccione una opci&oacute;n</option>
+                    @{
+                        foreach (var DescCortaEvento in Model.oLstDescCortaEventoP)
+                        {
+                            if (Model.oEventoPerdida != null)
+                            {
+                                if (Model.oEventoPerdida.oDescCortaEventoPerdida.nConsCod == DescCortaEvento.nConsValor)
+                                {
+                                    <option value=@DescCortaEvento.nConsValor selected>@DescCortaEvento.cConsDescripcion</option>
+                                }
+                                else
+                                {
+                                    <option value=@DescCortaEvento.nConsValor>@DescCortaEvento.cConsDescripcion</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@DescCortaEvento.nConsValor>@DescCortaEvento.cConsDescripcion</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        @if (Model.oEventoPerdida != null)
+        {
+            if (!String.IsNullOrEmpty(Model.oEventoPerdida.cGrupoEvento))
+            {
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="inEventoPadre" class="control-label">Agrupado con</label>
+                        <input class="form-control" id="inEventoPadre" placeholder="Código Evento" tabindex="5" autocomplete="off" maxlength="10" value="@(Model.oEventoPerdida.cGrupoEvento)" />
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="inEventoPadre" class="control-label">Agrupar con</label>
+                    <input class="form-control" id="inEventoPadre" placeholder="Código Evento" tabindex="5" autocomplete="off" maxlength="10" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selAgencia" class="control-label">Agencia</label>
+                <select id="selAgencia" class="select2" data-allow-clear="true" style="width:100%" tabindex="2">
+                    <option></option>
+                    <optgroup label="Lista de Agencias">
+                        @{
+                            foreach (var agencias in Model.oLstAgencia)
+                            {
+                                if (Model.oEventoPerdida != null)
+                                {
+                                    if (Model.oEventoPerdida.oDatosRiesgo.oAgencias.cAgeCod == agencias.cAgeCod)
+                                    {
+                                        <option value=@agencias.cAgeCod selected> @agencias.cAgeDescripcion</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@agencias.cAgeCod>@agencias.cAgeDescripcion</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value=@agencias.cAgeCod>@agencias.cAgeDescripcion</option>
+                                }
+                            }
+                        }
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selAreas" class="control-label">&Aacute;reas</label>
+                <select id="selAreas" class="select2" data-allow-clear="true" style="width:100%" tabindex="3">
+                    <option></option>
+                    <optgroup label="Lista de Áreas">
+                        @{
+                            foreach (var areas in Model.oLstAreas)
+                            {
+                                if (Model.oEventoPerdida != null)
+                                {
+                                    if (Model.oEventoPerdida.oDatosRiesgo.oAreas.cAreaCod == areas.cAreaCod)
+                                    {
+                                        <option value=@areas.cAreaCod selected>@areas.cAreaDescripcion</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                                }
+                            }
+                        }
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="inFecOcurrencia" class="control-label">Fecha Ocurrencia</label>
+                <input class="form-control" name="inFecOcurrencia" id="inFecOcurrencia" data-mask="date" placeholder="Fecha ocurrencia" onchange="getTpoCambio(this.value);" tabindex="4" value="@(Model.oEventoPerdida != null ? Model.oEventoPerdida.dFechaOcurrencia : String.Empty)" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="inFecDescubrimiento" class="control-label">Fecha Descubrimiento</label>
+                <input class="form-control" name="inFecDescubrimiento" id="inFecDescubrimiento" data-mask="date" placeholder="Fecha descubrimiento" tabindex="5" value="@(Model.oEventoPerdida != null ? Model.oEventoPerdida.dFechaDescubrimiento : String.Empty)" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="inFecRegContable" class="control-label">Fecha Reg. Contable</label>
+                <input class="form-control" name="inFecRegContable" id="inFecRegContable" data-mask="date" placeholder="Fecha reg. contable" tabindex="6" value="@(Model.oEventoPerdida != null ? Model.oEventoPerdida.dFechaRegCont : String.Empty)" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="inAnio" class="control-label">A&ntilde;o</label>
+                <input class="form-control text-right" id="inAnio" placeholder="@DateTime.Now.Year" onkeypress="return val_09(event);" maxlength="4" tabindex="7" value="@(Model.oEventoPerdida != null ? Model.oEventoPerdida.cAnio : String.Empty)" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selEventoPerdida" class="control-label">Evento de P&eacute;rdida</label>
+                <select id="selEventoPerdida" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                    <option>Seleccione una opci&oacute;n</option>
+                    @{
+                        foreach (var claseEvento in Model.LstClaseEventoPerdida)
+                        {
+                            if (Model.oEventoPerdida != null)
+                            {
+                                if (Model.oEventoPerdida.oClasesEventoPerdida.nCodClasEvento == claseEvento.nCodClaseEventoP)
+                                {
+                                    <option value=@claseEvento.nCodClaseEventoP selected>@claseEvento.cDescClaseEventoP</option>
+                                }
+                                else
+                                {
+                                    <option value=@claseEvento.nCodClaseEventoP>@claseEvento.cDescClaseEventoP</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@claseEvento.nCodClaseEventoP>@claseEvento.cDescClaseEventoP</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selSubEventoPerdida" class="control-label">Sub Evento de P&eacute;rdida</label>
+                <select id="selSubEventoPerdida" class="selectboxit" data-size="8" data-first-option="false" tabindex="7">
+                    @{
+                        if (Model.oEventoPerdida != null)
+                        {
+                            <option>Seleccione una opci&oacute;n</option>
+                            foreach (var subClasEvento in @Model.LstSubClaseEventoPerdida)
+                            {
+
+                                if (Model.oEventoPerdida.oClasesEventoPerdida.oSubClaseEventoPerdida.nCodSubClasEvento == subClasEvento.nCodSubClasEventoP)
+                                {
+                                    <option value=@subClasEvento.nCodSubClasEventoP selected> @subClasEvento.cDescSubClasEventoP</option>
+                                }
+                                else
+                                {
+                                    <option value=@subClasEvento.nCodSubClasEventoP> @subClasEvento.cDescSubClasEventoP</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">Asociado al Riesgo de Cr&eacute;dito</label>
+                <br />
+                <div class="make-switch switch-sm" data-on-label="Si" data-off-label="No">
+                    @if (Model.oEventoPerdida != null)
+                    {
+                        <input type="checkbox" id="inReportado" @(Model.oEventoPerdida.bReportado ? "checked=true" : String.Empty)>
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="inReportado" checked>
+                    }
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-3">
+                <div class="form-group">
+                    <label for="inCtaContable" class="control-label">Cuenta Contable @(Model.oEventoPerdida != null ? (":" + Model.oEventoPerdida.cCtaContDesc) : String.Empty)</label>
+                    <input class="form-control text-right" name="inCtaContable" id="inCtaContable" onkeypress="return val_09(event);" placeholder="Cuenta contable" tabindex="9" value="@(Model.oEventoPerdida != null ? Model.oEventoPerdida.cCtaContCod : String.Empty)" autocomplete="off" />
+                </div>
+            </div>*@
+        @*<div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Asociado al Riesgo</label>
+                    <br />
+                    <div class="make-switch switch-sm" data-on-label="Si" data-off-label="No">
+                        @if (Model.oEventoPerdida != null)
+                        {
+                            <input type="checkbox" id="inAsocRiesgo" @(Model.oEventoPerdida.bAsociaRiesgo ? "checked=true" : String.Empty)>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="inAsocRiesgo" checked>
+                        }
+                    </div>
+                </div>
+            </div>*@
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selProcesos" class="control-label">Procesos</label>
+                @{
+                    if (Model.oEventoPerdida != null)
+                    {
+                        <select id="selProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="7">
+                            <option></option>
+                            <optgroup label="Lista de Procesos">
+                                @foreach (var procesoAreas in Model.oLstProcesoAreas)
+                                {
+
+                                    if (Model.oEventoPerdida.oDatosRiesgo.oProceso.cCodProceso == procesoAreas.cCodProceso)
+                                    {
+                                        <option value=@procesoAreas.cCodProceso selected> @procesoAreas.cDescProceso</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@procesoAreas.cCodProceso> @procesoAreas.cDescProceso</option>
+                                    }
+                                }
+                            </optgroup>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="selProcesos" class="select2" style="width:100%" tabindex="3"></select>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selSubProcesos" class="control-label">Sub Procesos</label>
+                @{
+                    if (Model.oEventoPerdida != null)
+                    {
+                        <select id="selSubProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="7">
+                            <option></option>
+                            <optgroup label="Lista de Sub Procesos">
+                                @foreach (var subprocesoAreas in Model.oLstSubProcesoAreas)
+                                {
+
+                                    if (Model.oEventoPerdida.oDatosRiesgo.oProceso.oSubProceso.nCodSubProceso == subprocesoAreas.nCodSubProceso)
+                                    {
+                                        <option value=@subprocesoAreas.nCodSubProceso selected> @subprocesoAreas.cDescSubProceso</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@subprocesoAreas.nCodSubProceso> @subprocesoAreas.cDescSubProceso</option>
+                                    }
+                                }
+                            </optgroup>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="selSubProcesos" class="select2" style="width:100%" tabindex="3"></select>
+                    }
+                }
+            </div>
+        </div>
+
+        @*<div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Riesgo Crediticio</label>
+                    <br />
+                    <div class="make-switch switch-small" data-on-label="Si" data-off-label="No">
+                        <input type="checkbox" id="inRiesgoCrediticio" checked>
+                    </div>
+                </div>
+            </div>*@
+        @*<div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Exp. Evento P&eacute;rdida</label>
+                    <br />
+                    <div class="make-switch switch-small" data-on-label="Si" data-off-label="No">
+                        <input type="checkbox" id="inExpEvenPerdida" checked>
+                    </div>
+                </div>
+            </div>*@
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selLineaNeg" class="control-label">L&iacute;nea de Negocio</label>
+                <select id="selLineaNeg" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                    <option>Seleccione una opci&oacute;n</option>
+                    @{
+                        foreach (var linea in Model.oLstLineaNegocio)
+                        {
+                            if (Model.oEventoPerdida != null)
+                            {
+                                if (Model.oEventoPerdida.oLineaNeg.cCodLineaNeg == linea.cCodLineaNeg)
+                                {
+                                    <option value=@linea.cCodLineaNeg selected>@linea.cDescLineaNeg</option>
+                                }
+                                else
+                                {
+                                    <option value=@linea.cCodLineaNeg>@linea.cDescLineaNeg</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@linea.cCodLineaNeg>@linea.cDescLineaNeg</option>
+                            }
+
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selSubLineaNeg" class="control-label">Sub L&iacute;nea Negocio</label>
+                <select id="selSubLineaNeg" class="selectboxit" data-size="8" data-first-option="false" tabindex="7">
+                    @{
+                        if (Model.oEventoPerdida != null)
+                        {
+                            <option>Seleccione una opci&oacute;n</option>
+                            foreach (var subLineaNeg in Model.oLstSubLineaNegocio)
+                            {
+
+                                if (Model.oEventoPerdida.oLineaNeg.oSubLineaNeg.cCodSubLineaNeg == subLineaNeg.cCodSubLineaNeg)
+                                {
+                                    <option value=@subLineaNeg.cCodSubLineaNeg selected> @subLineaNeg.cDescSubLineaNeg</option>
+                                }
+                                else
+                                {
+                                    <option value=@subLineaNeg.cCodSubLineaNeg> @subLineaNeg.cDescSubLineaNeg</option>
+                                }
+                            }
+                        }
+                    }
+                </select>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="selCobertura" class="control-label">Cobertura</label>
+                <select id="selCobertura" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                    <option>Seleccione una opci&oacute;n</option>
+                    @{
+                        foreach (var cobertura in Model.oLstTipoCobertura)
+                        {
+                            if (Model.oEventoPerdida != null)
+                            {
+                                if (Model.oEventoPerdida.oCobertura.nConsCod == cobertura.nConsValor)
+                                {
+                                    <option value=@cobertura.nConsValor selected>@cobertura.cConsDescripcion</option>
+                                }
+                                else
+                                {
+                                    <option value=@cobertura.nConsValor>@cobertura.cConsDescripcion</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@cobertura.nConsValor>@cobertura.cConsDescripcion</option>
+                            }
+
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4>Cuentas contables</h4>
+                        <span>Agregue las cuentas contables asociado al evento de p&eacute;rdida</span>
+                    </div>
+                    <div class="panel-options">
+                        <button type="button" class="btn btn-primary" onclick="AgregarCuentaContable()">Agregar cuentas contables</button>
+                        @*<a href="javascript:eliminarFila()"><i class="entypo-trash"></i></a>*@
+                    </div>
+                </div>
+                <table id="tbl-cta-contable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td class="text-center bold text-primary" width="10%">C&oacute;digo</td>
+                            <td class="text-center bold text-primary" width="60%">Descripci&oacute;n</td>
+                            <td class="text-center bold text-primary" width="15%">Acci&oacute;n</td>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color:#FFFFFF">
+                        @{
+                            if (Model.oEventoPerdida != null)
+                            {
+                                if (Model.oLstCtaContEvento != null)
+                                {
+                                    int nItemCta = 0;
+                                    foreach (var cuentas in Model.oLstCtaContEvento)
+                                    {
+                                        nItemCta++;
+                                        string cIDCuenta = "cta" + Convert.ToString(nItemCta);
+                                        <tr id="@cIDCuenta">
+                                            <td class="text-center text-primary">@cuentas.Codigo</td>
+                                            <td class="text-primary">@cuentas.cCtaContDesc.Substring(Convert.ToInt32(cuentas.cCtaContDesc.IndexOf("]")) + 1)</td>
+                                            <td style="text-align:center">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary btn-sm">Acci&oacute;n</button>
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-default pull-right">
+                                                        <li><a href="javascript:EliminarCuentaContable(@Convert.ToString(nItemCta))"><i class="entypo-trash"></i>Eliminar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="inMontoPerdida" class="row col-md-12 control-label">Monto P&eacute;rdida</label>
+                <div class="row col-md-6">
+                    <select id="selMonedaMontoPerdida" class="selectboxit" tabindex="10">
+                        @if (Model.oEventoPerdida != null)
+                        {
+                            <option value="1" @(Model.oEventoPerdida.cPenMontoPerdida == "1" ? "selected" : String.Empty)>(S/) Soles</option>
+                            <option value="2" @(Model.oEventoPerdida.cPenMontoPerdida == "2" ? "selected" : String.Empty)>($) D&oacute;lares</option>
+                        }
+                        else
+                        {
+                            <option value="1" selected>(S/) Soles</option>
+                            <option value="2">($) D&oacute;lares</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control text-right" id="inMontoPerdida" placeholder="0.00" onkeypress="return val_09D(event);" tabindex="11" value="@(Model.oEventoPerdida != null ? String.Format("{0:n}", Model.oEventoPerdida.nMontoPerdida) : String.Empty)" autocomplete="off" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="inMontoRecuperado" class="row col-md-12 control-label">Monto Recuperado</label>
+                <div class="row col-md-6">
+                    <select id="selMonedaMontoRecuperado" class="selectboxit" tabindex="12">
+                        @if (Model.oEventoPerdida != null)
+                        {
+                            <option value="1" @(Model.oEventoPerdida.cPenMontoRecup == "1" ? "selected" : String.Empty)>(S/) Soles</option>
+                            <option value="2" @(Model.oEventoPerdida.cPenMontoRecup == "2" ? "selected" : String.Empty)>($) D&oacute;lares</option>
+                        }
+                        else
+                        {
+                            <option value="1" selected>(S/) Soles</option>
+                            <option value="2">($) D&oacute;lares</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control text-right" id="inMontoRecuperado" placeholder="0.00" onkeypress="return val_09D(event);" tabindex="13" value="@(Model.oEventoPerdida != null ? String.Format("{0:n}", Model.oEventoPerdida.nMontoBruto) : String.Empty)" autocomplete="off" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="inMontoProvisiona" class="row col-md-12 control-label">Monto Provisionado</label>
+                <div class="row col-md-6">
+                    <select id="selMonedaMontoProvisiona" class="selectboxit" tabindex="14">
+                        @if (Model.oEventoPerdida != null)
+                        {
+                            <option value="1" @(Model.oEventoPerdida.cPenMontoProvision == "1" ? "selected" : String.Empty)>(S/) Soles</option>
+                            <option value="2" @(Model.oEventoPerdida.cPenMontoProvision == "2" ? "selected" : String.Empty)>($) D&oacute;lares</option>
+                        }
+                        else
+                        {
+                            <option value="1" selected>(S/) Soles</option>
+                            <option value="2">($) D&oacute;lares</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-control text-right" id="inMontoProvisiona" placeholder="0.00" onkeypress="return val_09D(event);" tabindex="15" value="@(Model.oEventoPerdida != null ? String.Format("{0:n}", Model.oEventoPerdida.nMontoProvision) : String.Empty)" autocomplete="off" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h4>Detalle del gasto</h4>
+                        <span>Ingrese el detalle del gasto generado por el evento de p&eacute;rdida</span>
+                    </div>
+                    <div class="panel-options">
+                        @*<a href="javascript:EliminarGasto()"><i class="entypo-trash"></i></a>*@
+                        <button type="button" class="btn btn-primary" onclick="AgregarGasto()">Agregar gasto</button>
+                    </div>
+                </div>
+                <table id="tbl-det-gastos" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td class="text-center bold text-primary" width="60%">Concepto</td>
+                            <td class="text-center bold text-primary" width="15%">Moneda</td>
+                            <td class="text-center bold text-primary" width="15%">Monto</td>
+                            <td class="text-center bold text-primary" width="10%">Acciones</td>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color:#FFFFFF">
+                        @{
+                            if (Model.oEventoPerdida != null)
+                            {
+                                if (Model.oLstGastosEvento != null)
+                                {
+                                    int nItemGasto = 0;
+                                    string cIDGasto = "";
+                                    foreach (var gasto in Model.oLstGastosEvento)
+                                    {
+                                        nItemGasto++;
+                                        cIDGasto = "gasto" + Convert.ToString((nItemGasto));
+                                        <tr id="@cIDGasto">
+                                            <td>
+                                                <input id="xGlosa" class="form-control" style="border:none" placeholder="Glosa del gasto" value="@(gasto.Concepto)" />
+                                            </td>
+                                            <td>
+                                                <select id="xMoneda" class="form-control" style="border:none">
+                                                    <option value="1" @(gasto.Moneda == 1 ? "selected" : String.Empty)>(S/) Soles</option>
+                                                    <option value="2" @(gasto.Moneda == 2 ? "selected" : String.Empty)>($) D&oacute;lares</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input id="xMonto" class="form-control text-right" style="border:none" placeholder="0.00" onkeypress="return val_09D(event);" onchange="getMontoBruto();" value="@(String.Format("{0:n}", gasto.Monto))" />
+                                            </td>
+                                            <td style="text-align:center">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary btn-sm">Acci&oacute;n</button>
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-default pull-right">
+                                                        <li><a href="javascript:EliminarGasto(@(nItemGasto))"><i class="entypo-trash"></i>Eliminar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+
+        <div class="col-md-6">
+            <table class="table-bordered" style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td class="col-lg-3 trTitulo"><strong>Monto Bruto</strong><span class="pull-right" style="padding-right: 5px"><strong>S/</strong></span></td>
+                        <td class="col-lg-3 text-center trValor"><strong id="td_MontoBruto">@(Model.oEventoPerdida != null ? String.Format("{0:n}", Model.oEventoPerdida.nMontoBruto) : String.Empty)</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 trTitulo"><strong>P&eacute;rdida Neta</strong><span class="pull-right" style="padding-right: 5px"><strong>S/</strong></span></td>
+                        <td class="col-lg-3 text-center trValor"><strong id="td_PerdidaNeta">@(Model.oEventoPerdida != null ? String.Format("{0:n}", Model.oEventoPerdida.nPerdidaNeta) : String.Empty)</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</form>

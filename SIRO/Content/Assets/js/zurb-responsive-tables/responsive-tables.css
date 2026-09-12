@@ -1,0 +1,104 @@
+/* Foundation v2.1.4 http://foundation.zurb.com */
+/* Artfully masterminded by ZURB  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+
+    table.responsive {
+        margin-bottom: 0;
+    }
+
+    .pinned {
+        text-align:center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #fff;
+        width: 30%;
+        overflow: hidden;
+        overflow-x: scroll;
+        border-right: 1px solid #ccc;
+    }
+
+        .pinned table {
+            border-right: none;
+            border-left: none;
+            width: 100%;
+        }
+
+            .pinned table th, .pinned table td {
+                white-space: nowrap;
+            }
+
+        .pinned td:last-child {
+            border-bottom: 0;
+        }
+
+    div.table-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+        div.table-wrapper div.rt-scrollable {
+            margin-left: 30%;
+          
+        }
+
+        div.table-wrapper div.rt-scrollable {
+            overflow: scroll;
+            overflow-y: hidden;
+        }
+            /*ADD TORE*/
+            div.table-wrapper div.rt-scrollable::-webkit-scrollbar {
+                -webkit-appearance: none;
+            }
+
+                div.table-wrapper div.rt-scrollable::-webkit-scrollbar:vertical {
+                    width: 10px;
+                }
+
+            div.table-wrapper div.rt-scrollable::-webkit-scrollbar-button:increment, .contenedor::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            div.table-wrapper div.rt-scrollable::-webkit-scrollbar:horizontal {
+                height: 10px;
+            }
+
+            div.table-wrapper div.rt-scrollable::-webkit-scrollbar-thumb {
+                background-color: #797979;
+                border-radius: 20px;
+                border: 2px solid #f1f2f3;
+            }
+
+            div.table-wrapper div.rt-scrollable::-webkit-scrollbar-track {
+                border-radius: 10px;
+            }
+    /*END TORE*/
+
+
+    table.responsive td, table.responsive th {
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+        table.responsive th:first-child, table.responsive td:first-child, table.responsive td:first-child, table.responsive.pinned td {
+            display: none;
+        }
+}

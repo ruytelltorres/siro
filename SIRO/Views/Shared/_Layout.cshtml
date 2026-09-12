@@ -1,0 +1,192 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="SIRO" />
+    <meta name="author" content="RUYTELL TORRES RENGIFO" />
+
+    <link rel="icon" href="@Url.Content("~/Content/Assets/images/default/favicon.ico")">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/font-icons/entypo/css/entypo.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/font-icons/font-awesome/css/font-awesome.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/font-icons/font-siro/font-siro.css")">
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/assets/css/font-icons/cmac/css/fontello.css")">*@
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/bootstrap.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/neon-core.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/neon-theme.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/neon-forms.css")">
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/assets/css/neon.css")">*@
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/skins/white.css")">
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/assets/css/skins/black.css")">*@
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/assets/css/skins/blue.css")">*@
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/assets/css/skins/red.css")">*@
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/custom.css")">
+
+    <script src="@Url.Content("~/Content/assets/js/jquery-1.11.3.min.js")"></script>
+</head>
+
+
+<body class="page-body skin-main" data-url="#">
+    @*<body class="page-body" data-url="http://intranet/login/">*@
+
+    <div class="page-container">
+        <!-- añadir la clase "sidebar-collapsed" para tener el menu contraido por defecto, "chat-visible" to make chat appear always -->
+        <div class="sidebar-menu fixed">
+            <div class="sidebar-menu-inner">
+                <header class="logo-env">
+                    <!-- logo -->
+                    <div class="logo">
+                        <a href="@Url.Action("Index", "Home")">
+                            <img src="~/Content/assets/images/default/logo-siro@x2.png" width="150" alt="" />
+                        </a>
+                    </div>
+                    <!-- logo collapse icon -->
+                    <div class="sidebar-collapse">
+                        <a href="#" class="sidebar-collapse-icon with-animation">
+                            <!-- añadir la clase "with-animation" si se desea animacion durante la expancion y el colapso del menu-->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+
+                    <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+                    <div class="sidebar-mobile-menu visible-xs">
+                        <a href="#" class="with-animation">
+                            <!-- add class "with-animation" to support animation -->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+                </header>
+
+                @Html.Action("ObtenerMenuUsuario", "Menu")
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="row">
+                <div class="col-md-12" style="background-color:#fff; border:1px solid #ebebeb; border-radius: 5px 5px 0px 0px; padding: 5px; margin-bottom: 5px">
+                    <!-- Profile Info and Notifications -->
+                    <div class="col-md-6 col-sm-8 menu-border-left clearfix">
+
+                        <ul class="user-info pull-left pull-none-xsm">
+
+                            <!-- Profile Info -->
+                            <li class="profile-info dropdown">
+                                <!-- add class "pull-right" if you want to place this from right -->
+                                @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="@Url.Content("~/Content/Assets/images/cmac-maynas/perfiles/invitado.png")" alt="" class="img-circle" width="44" />
+                                       @usuario.oPersona.cPersNombre <br /><small>@usuario.oCargo.cRHCargoDescripcion</small>
+                                    </a>*@
+                                <h4 style="font-weight: 600;">
+                                    @usuario.oPersona.cPersNombre <br />
+                                    <small>(@usuario.cRHCargoDescripcion)</small>
+                                </h4>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <!-- Raw Links -->
+                    <div class="col-md-6 col-sm-4 menu-border-right clearfix hidden-xs">
+                        <ul class="list-inline links-list pull-right">
+                            <li>
+                                <a href="@Url.Action("Logout", "Login")">
+                                    Salir <i class="entypo-logout right"></i>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <ol class="breadcrumb bc-1">
+                    @Html.MvcSiteMap().SiteMapPath()
+                </ol>
+            </div>
+
+            @RenderBody()
+
+            <!-- Footer -->
+            <footer class="main">
+                <div class="row">
+                    <div class="col-sm-3 col-md-6">
+                        <p class="text-left no-margin">
+                            &copy; @DateTime.Now.Year - Sistema de Gesti&oacute;n de Riesgo Operacional (SIRO) - Todos los derechos reservados
+                        </p>
+                    </div>
+
+                    <div class="col-sm-3 col-md-6">
+                        <p class="text-right no-margin">
+                            <strong>
+                                Versi&oacute;n: 2.0.0
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+
+    </div>
+
+    <!-- Principales -->
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/datatables/datatables.css")">*@
+    @*<script src="@Url.Content("~/Content/Assets/js/datatables/datatables.min.js")"></script>*@
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/assets/js/zurb-responsive-tables/responsive-tables.css")">
+    @*<script src="@Url.Content("~/Content/Assets/js/metismenu/metisMenu.min.js")"></script>*@
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/select2/select2-bootstrap.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/select2/select2.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/selectboxit/jquery.selectBoxIt.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/daterangepicker/daterangepicker-bs3.css")">
+
+
+    <script src="@Url.Content("~/Content/Assets/js/gsap/TweenMax.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/bootstrap.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/moment.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/joinable.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/resizeable.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/neon-api.js")"></script>
+
+    <script src="@Url.Content("~/Content/Assets/js/bootstrap-datepicker.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/select2/select2.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/select2/select2_locale_es.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/bootstrap-tagsinput.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/typeahead.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/selectboxit/jquery.selectBoxIt.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/jquery.inputmask.bundle.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/bootstrap-switch.min.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/bootbox/bootbox.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/zurb-responsive-tables/responsive-tables.js")"></script>
+
+    <script src="@Url.Content("~/Content/Assets/js/jquery.multi-select.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/icheck/icheck.min.js")"></script>
+
+    <script src="@Url.Content("~/Content/Assets/js/neon-custom.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/neon-demo.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/toastr.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/conexion.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/siro.tabla.js")"></script>
+    @*<script src="@Url.Content("~/Content/Assets/js/simple.datagrid.js")"></script>*@
+    <script src="@Url.Content("~/Content/Assets/js/siro.mensajes.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/main.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/siro.validador.js")"></script>
+    <script src="@Url.Content("~/Content/Assets/js/siro.globals.js")"></script>
+</body>
+
+
+
+</html>
+

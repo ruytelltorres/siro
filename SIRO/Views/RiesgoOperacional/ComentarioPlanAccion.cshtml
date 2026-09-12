@@ -1,0 +1,69 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@model SIRO.Models.GestionRiesgoModel
+
+@{
+    ViewBag.Title = "Comentarios Plan de Acción";
+}
+
+<div class="profile-env" style="background-color: #FFFFFF; border: 1px solid #EBEBEB; border-radius: 5px">
+    <section class="profile-feed">
+        <div class="profile-stories">
+            <article class="story">
+                <aside class="user-thumb">
+                    <a href="#">
+                        <img src="~/Content/Assets/images/cmac-maynas/perfiles/invitado.png" width="44" alt="" class="img-circle" />
+                    </a>
+                </aside>
+                <div class="story-content">
+                    <header>
+                        <div class="publisher">
+                            <strong class="text-primary">Plan de Acci&oacute;n @Model.oPlanAccion.nPlanCod vinculado al riesgo @Model.oDatosRiesgo.cCodRiesgo</strong>
+                            <em>@Model.oPlanAccion.dFechaRegistro</em>
+                        </div>
+
+                        <div class="story-type">
+                            <i class="@Model.oPlanAccion.cIconoEstado"></i>
+                        </div>
+                    </header>
+
+                    <div class="story-main-content">
+                        <p class="text-primary">@Model.oPlanAccion.cPlanDescripcion</p>
+                    </div>
+                    <footer>
+                        <a href="#"><i class="entypo-comment"></i>Comentarios <span></span></a>
+                        <div id="content-comentarios-plan-accion"></div>
+                    </footer>
+                </div>
+            </article>
+            @*<div class="text-center">
+                    <a href="#" class="btn btn-default btn-icon icon-left">
+                        <i class="entypo-hourglass"></i>
+                        Load More &hellip;
+                    </a>
+                </div>*@
+
+        </div>
+
+    </section>
+</div>
+<script type="text/javascript">
+    var gCodPlan = @Model.oPlanAccion.nPlanCod;
+    var gEstadoPlan = @Model.oPlanAccion.nEstado
+
+        $(function () {
+            Comentarios();
+        });
+
+    async function Comentarios() {
+        $.fn.Conexion({
+            direccion: "/RiesgoOperacional/ListaComentariosPlanAccion",
+            datos: { pnCodPlan: gCodPlan},
+            terminado: function (result) {
+                $("#content-comentarios-plan-accion").html(result);
+                $(".story-content footer span").html("(" + lnComentarios + ")");
+            },
+        });
+    }
+
+</script>
+

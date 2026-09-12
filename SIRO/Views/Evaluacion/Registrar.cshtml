@@ -1,0 +1,67 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Registrar Autoevaluación";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gModelo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Registro de autoevaluaciones</h4>
+                <span>Módulo de registro de las autoevaluaciones identificados</span>
+            </div>
+            <div class="panel-options">
+                <button id="btnRegEvaluacion" type="button" class="btn btn-primary btn-block btn-icon">Guardar<i class="entypo-floppy"></i></button>
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="selTpoEvaluacion" class="control-label">Tipo de evaluaci&oacute;n</label>
+                        <select id="selTpoEvaluacion" class="selectboxit" data-size="8" data-first-option="false" style="width:30%">
+                            <option>Seleccione opci&oacute;n</option>
+                            @{
+                                foreach (var _Evaluacion in Model.oLstTipoEvaluacion)
+                                {
+                                    <option value="@_Evaluacion.nConsValor">@_Evaluacion.cConsDescripcion</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="FiltroProcesos"></div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <label for="inRiesgoIdentificado" class="control-label">Riesgo Identificado</label>
+                    <textarea class="form-control scrolltextarea" id="inRiesgoIdentificado" name="inRiesgoIdentificado" data-validate="minlength[10]" rows="5" placeholder="Descripción del riesgo identificado" style="width:100%" tabindex="1"></textarea>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                    <label for="selCausaRiesgo" class="control-label">Causas</label>
+                    <select id="selCausaRiesgo" class="select2" multiple="multiple" style="width:100%" data-placeholder="Seleccione la(s) causa(s) del riesgo" tabindex="4">
+                        @{
+                            foreach (var sCausas in Model.oLstCausas)
+                            {
+                                <option value=@sCausas.cCodCausa>@sCausas.cCausaDesc</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="@Url.Content("~/Content/Assets/js/siro/evaluacion.registro.js")"></script>

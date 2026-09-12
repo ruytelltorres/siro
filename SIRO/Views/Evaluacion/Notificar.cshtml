@@ -1,0 +1,78 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Notificar Evaluación";
+    Usuario usuario = (Usuario)Session["Usuario"];
+
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+@*<link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/icheck/skins/minimal/_all.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/icheck/skins/square/_all.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/icheck/skins/flat/_all.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/Assets/js/icheck/skins/futurico/futurico.css")">*@
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius" data-collapsed="0">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>
+                    Notificaci&oacute;n de  autoevaluaciones
+                    <button type="button"
+                            class="btn btn-link"
+                            style="padding:0"
+                            data-toggle="popover"
+                            data-placement="top"
+                            data-original-title="Información Importante"
+                            data-content="Al realizar la notificación de las autoevaluaciones, el sistema creará el taller con las autoevaluaciones seleccionadas.">
+                        <i class="entypo-info-circled" style="font-size: 16px;"></i>
+                    </button>
+                </h4>
+                <span>M&oacute;dulo de gesti&oacute;n de las notificaciones de las autoevaluaciones registradas</span>
+            </div>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse" class="btn-panel-filter" role="button" title="Mostrar u ocultar filtros" aria-label="Mostrar u ocultar filtros"><i class="fa fa-filter" aria-hidden="true"></i></a>
+                @*<button id="btnGenerarReporte" type="button" class="btn btn-primary btn-icon">Exportar<i class="fa fa-file-excel-o"></i></button>*@
+                <button id="btnNotificar" type="button" class="btn btn-primary btn-icon">Notificar<i class="entypo-flag"></i></button>
+                <button id="btnExportar" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row" style="display:flex; align-items:center;">
+                <div class="col-md-8">
+                    <div class="dataTables-mostrar-registros" style="display:flex; align-items:center; gap:6px; height:34px;">
+                        <label style="margin:0; font-weight:normal;">Mostrar</label>
+                        <select id="selMostrarRegistros" class="form-control input-sm" style="width:75px; display:inline-block; height:34px;">
+                            <option value="5">5</option>
+                            <option value="10" selected="selected">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label style="margin:0; font-weight:normal;">registros</label>
+                    </div>
+                </div>
+                <div class="col-md-4 pull-right">
+                    @*<label class="control-label">C&oacute;digo de la evaluaci&oacute;n</label>*@
+                    @*<div class="input-group">
+                    <input type="text" class="form-control" id="inCodEval" placeholder="Código Evaluación" maxlength="11">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" id="btnBuscarEval" disabled>Buscar</button>
+                    </span>
+                </div>*@
+                    <div class="search-form-full">
+                        <div class="form-group" id="content-busqueda" style="margin-bottom:0;">
+                            <input type="text" class="form-control" id="inBuscar" placeholder="Buscar" style="height:34px;" />
+                            <i class="entypo-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" id="content-tbl-evaluacion-lista-notificacion"></div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/siro/evaluacion.notificar.js")"></script>
+
+

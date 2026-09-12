@@ -1,0 +1,110 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio;
+@{
+    ViewBag.Title = "Gestión del Plan Acción";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+
+<script type="text/javascript">
+    var gmodel = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Plan de Acci&oacute;n: <strong>@Model.oPlanAccion.nPlanCod</strong></h3>
+                    <span>Gesti&oacute;n del plan de acci&oacute;n</span>
+                </div>
+            </div>
+            <div class="panel-body" style="background-color: #FFFFFF">
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Plan de Acci&oacute;n</label>
+                        <div class="col-md-10">
+                            <p class="text-primary">
+                                @Model.oPlanAccion.cPlanDescripcion
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Responsables</label>
+                        <div class="col-md-10">
+                            @foreach (var responsables in Model.oLstReponPlanAccion)
+                            {
+                                <p class="text-primary">@responsables.oPersona.cPersNombre</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Estado</label>
+                        <div class="col-md-10">
+                            <p class="text-primary"> @Model.oPlanAccion.cEstado </p>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-3">
+                        @if (Model.oPlanAccion.nEstado == 2)
+                        {
+                            <button id="btnImplementado" type="button" class="btn btn-success btn-sm btn-block btn-icon">Implementado<i class="entypo-check"></i></button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Fecha de Implementaci&oacute;n</h3>
+                    <span>Fechas de implementaci&oacute;n del plan de acci&oacute;n</span>
+                </div>
+            </div>
+            <div class="panel-body" style="background-color: #FFFFFF">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inFechaImplementacion" data-mask="date" placeholder="Fecha Implementación">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" id="btnAddFechaImplement" disabled>Agregar</button>
+                    </span>
+                </div>
+                <br />
+                <ul class="country-list" id="lista_fecha_implemetacion" style="padding: 0; width: 100%">
+                    @foreach (var fechas in Model.lstObservacionesGestion)
+                    {
+                        string[] lista_clase_estado = { "", "label label-success", "label label-warning", "label label-danger", "" };
+                        string clase_estado = lista_clase_estado[Convert.ToInt32(fechas.ValorEstado)];
+                        <li>@fechas.FechaImplementa <span class="pull-right @clase_estado">@fechas.Estado</span></li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+
+        @*<div class="panel panel-primary panel-table">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h3>Estado</h3>
+                        <span>Estado actual del plan de acci&oacute;n</span>
+                    </div>
+                </div>
+                <div class="tile-title tile-gray" style="margin-bottom:0; border-radius: 0; cursor: pointer" onclick="MostrarEstadosPlan()">
+                    <div class="icon">
+                        <i data-class-icono-estado="@Model.oPlanAccion.cIconoEstado" class="@Model.oPlanAccion.cIconoEstado"></i>
+                    </div>
+                    <div class="title">
+                        <h3>@Model.oPlanAccion.cEstado</h3>
+                        <p>Estado actual del Plan de Acci&oacute;n</p>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/siro/evaluacion.plan.accion.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/FileUploader.js")"></script>

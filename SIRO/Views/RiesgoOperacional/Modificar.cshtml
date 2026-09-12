@@ -1,0 +1,30 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Riesgo Operacional | Modificar";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+    var gModelo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h3>EDITAR <b>@Model.oRiesgoOperacional.cCodRiesgo</b></h3>
+                <span>M&oacute;dulo para la edici&oacute;n del riesgo. Haga <a href="#">click aqu&iacute;</a> para conocer el detalle del registro</span>
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff">
+            @Html.Partial("_RiesgoOperacional");
+        </div>
+        <div class="panel-footer">
+            <button id="btnModificar" type="button" class="btn btn-primary btn-icon">Guardar<i class="entypo-floppy"></i></button>
+        </div>
+    </div>
+</div>
+
+<!--Ingresar codigo del modal del detalle-->
+
+<script src="@Url.Content("~/Content/assets/js/siro/riesgoope.registro.js")"></script>

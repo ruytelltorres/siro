@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Inicio" controller="Home" action="Index">
+
+    <mvcSiteMapNode title="Riesgos Operacionales" controller="RiesgoOperacional" action="ListaGestion">
+      <mvcSiteMapNode title="Registrar Riesgo Operacional" controller="RiesgoOperacional" action="Registrar" />
+      <mvcSiteMapNode title="Gestión de Riesgo Operacional" controller="RiesgoOperacional" action="ListaGestion" />
+      <mvcSiteMapNode title="Modificar Riesgo Operacional" controller="RiesgoOperacional" action="Modificar" />
+      <mvcSiteMapNode title="Detalle de Riesgo Operacional" controller="RiesgoOperacional" action="DetalleRiesgo" />
+      <mvcSiteMapNode title="Gestionar Riesgo Operacional" controller="RiesgoOperacional" action="GestionRiesgo" />
+      <mvcSiteMapNode title="Planes de Acción" controller="RiesgoOperacional" action="PlanesAccion" />
+      <mvcSiteMapNode title="Comentario de Plan de Acción" controller="RiesgoOperacional" action="ComentarioPlanAccion" />
+      <mvcSiteMapNode title="Gestión de Incentivos" controller="RiesgoOperacional" action="GestionIncentivo" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Evaluaciones" controller="Evaluacion" action="Lista">
+      <mvcSiteMapNode title="Registrar Evaluación" controller="Evaluacion" action="Registrar" />
+      <mvcSiteMapNode title="Lista de Evaluaciones" controller="Evaluacion" action="Lista" />
+      <mvcSiteMapNode title="Detalle de Evaluación" controller="Evaluacion" action="Detalle" />
+      <mvcSiteMapNode title="Gestionar Evaluación" controller="Evaluacion" action="Gestion" />
+      <mvcSiteMapNode title="Plan de Acción de Evaluación" controller="Evaluacion" action="PlanAccion" />
+      <mvcSiteMapNode title="Notificar Evaluaciones" controller="Evaluacion" action="Notificar" />
+      <mvcSiteMapNode title="Monitorear Evaluaciones" controller="Evaluacion" action="Monitorear" />
+      <mvcSiteMapNode title="Gestión de Evaluaciones" controller="Evaluacion" action="Evaluaciones" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Evento de Pérdida" controller="EventoPerdida" action="Lista">
+      <mvcSiteMapNode title="Registrar Evento de Pérdida" controller="EventoPerdida" action="Registrar" />
+      <mvcSiteMapNode title="Lista de Eventos de Pérdida" controller="EventoPerdida" action="Lista" />
+      <mvcSiteMapNode title="Modificar Evento de Pérdida" controller="EventoPerdida" action="Modificar" />
+      <mvcSiteMapNode title="Detalle de Evento de Pérdida" controller="EventoPerdida" action="Detalle" />
+      <mvcSiteMapNode title="Reporte de Eventos Agrupados" controller="EventoPerdida" action="ReporteEventosAgrupados" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Reportes" controller="Reporte" action="Grafico">
+      <mvcSiteMapNode title="Matriz de Riesgo" controller="Reporte" action="MatrizRiesgo" />
+      <mvcSiteMapNode title="Matriz de Evento de Pérdida" controller="Reporte" action="MatrizEventoPerdida" />
+      <mvcSiteMapNode title="Mapa de Riesgo" controller="Reporte" action="MapaRiesgo" />
+      <mvcSiteMapNode title="Reportes Gráficos" controller="Reporte" action="Grafico" />
+      <mvcSiteMapNode title="Reportes Varios" controller="Reporte" action="Varios" />
+      <mvcSiteMapNode title="Dashboard PBI" controller="Reporte" action="DashboardPBI" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Configuración" controller="Configuracion" action="Elementos">
+      <mvcSiteMapNode title="Configuración de Elementos" controller="Configuracion" action="Elementos" />
+      <mvcSiteMapNode title="Administración de Usuarios" controller="Configuracion" action="AdminUser" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Manual de Usuario" controller="Home" action="Manual" />
+
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

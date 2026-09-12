@@ -1,0 +1,70 @@
+﻿<div class="panel panel-primary panel-table">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Gestionar Causas del Riesgo</h3>
+            <span>Gestiona los registros de las probables causas del riesgo</span>
+        </div>
+    </div>
+    <div class="panel-body" style="background:#fff">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            <div class="search-form-full">
+                <div class="form-group" id="content-busqueda">
+                    <input type="text" class="form-control" id="inCodEvaluacion" placeholder="Buscar" />
+                    <i class="entypo-search"></i>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="col-md-12">
+            <div id="content-tbl-causas-riesgos-gestion"></div>
+        </div>
+    </div>
+    <div class="panel-footer" style="padding-right:30px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-left">
+                </div>
+                <div class="pull-right">
+                    <button id="btnAgregarCausasRiesgo" type="button" class="btn btn-primary btn-block btn-icon">Agregar<i class="entypo-plus-squared"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="modal-registro-causas-riesgos" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4><strong>Causas del riesgo</strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inCausaDesc" class="control-label">Causa del Riesgo</label>
+                            <input type="text" id="inCausaDesc" name="inCausaDesc" class="form-control" placeholder="Ingrese descripción de la causa" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-default" id="btnCancelarCausaRiesgo" data-dismiss="modal">Cerrar</button>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" id="btnRegCausaRiesgo">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="btnActCausaRiesgo">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Assets/js/siro/config.element.causas.js")"></script>

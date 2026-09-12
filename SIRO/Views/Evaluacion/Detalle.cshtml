@@ -1,0 +1,124 @@
+﻿
+@using CMACMaynas.Web.SIRO.Negocio
+@using SIRO.Utils.Constantes
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Detalle de la evalación";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+    var gEvaluacionDet = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Detalle de la autoevaluaci&oacute;n: <b>@Model.cCodRiesgo</b></h4>
+                
+            </div>
+            <div class="panel-options">
+                @if (usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO)
+                {
+                    <button type="button" class="btn btn-primary btn-icon" id="btnEliminarEvaluacion">Eliminar <i class="fa fa-trash-o"></i></button>
+                    <button type="button" class="btn btn-danger btn-icon" id="btnRecharEvaluacion">Rechazar <i class="fa fa-close"></i></button>
+                }
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" class="form-horizontal form-groups-bordered">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Datos de Usuario</label>
+                            <div class="col-md-9">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td width="30%"><strong>Nombre</strong></td>
+                                            <td width="10%" class="text-center"><strong>Usuario</strong></td>
+                                            <td width="30%" class="text-center"><strong>Agencia</strong></td>
+                                            <td width="30%" class="text-center"><strong>&Aacute;rea</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-primary">@Model.oUsuario.cUsuario</td>
+                                            <td class="text-primary text-center">@Model.oUsuario.cUser</td>
+                                            <td class="text-primary text-center">@Model.oAgencia.cAgeDescripcion</td>
+                                            <td class="text-primary text-center">@Model.oAgencia.oArea.cAreaDescripcion</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Descripci&oacute;n del riesgo</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.cRiesgoIdentiticado</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Tipo de Evaluaci&oacute;n</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.oTipoEvaluacion.cConsDescripcion</p>
+                            </div>
+                        </div>
+
+
+                        @if (Model.oTipoEvaluacion.nConsValor == 1001)
+                        {
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Detalle del tipo de evaluaci&oacute;n</label>
+                                <div class="col-md-6">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td width="30%" class="text-center"><strong>Proceso</strong></td>
+                                                <td width="30%" class="text-center"><strong>Sub Proceso</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-primary text-center">@Model.oProceso.cDescProceso</td>
+                                                <td class="text-primary text-center">@Model.oProceso.oSubProceso.cDescSubProceso</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Fecha de detecci&oacute;n</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Convert.ToDateTime(Model.dFechaRegistro).ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Causas</label>
+                            <div class="col-md-6">
+                                @{
+                                    string[] lsCausas = Convert.ToString(Model.oCausas.cCausaDesc).Split('|');
+                                    //int nCantidad = 0;
+                                    foreach (string lsCausa in lsCausas)
+                                    {
+                                        //nCantidad += 1;
+                                        @*<p class="text-primary">@Convert.ToString(nCantidad + ".- ")@lsCausa</p>*@
+                                        <p class="text-primary">@lsCausa</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="@Url.Content("~/Content/Assets/js/siro/evaluacion.detalle.js")"></script>

@@ -1,0 +1,49 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+<div class="col-md-4">
+    <div class="form-group">
+        <label for="selAreas" class="control-label">&Aacute;reas</label>
+        <select id="selAreas" data-allow-clear="true" style="width:100%"></select>
+        <script type="text/javascript">
+            $("#selAreas").select2().on('change', function (e) {
+                $.fn.Conexion({
+                    direccion: '/RiesgoOperacional/ListarProcesosAreas',
+                    datos: { psCodArea: $(this).val() },
+                    bloqueo: true,
+                    terminado: function (data) {
+                        datos = JSON.parse(data);
+                        $("#selProcesos").selselect2({ dataShow: "cDescProceso", dataValue: "cCodProceso", datalist: datos.oLstProcesoArea });
+                    },
+                });
+            });
+            var $areas = JSON.parse(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewData.Model)));
+            $("#selAreas").selselect2({ dataShow: "cAreaDescripcion", dataValue: "cAreaCod", datalist: $areas });
+          
+        </script>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-group">
+        <label for="selProcesos" class="control-label">Proceso</label>
+        <select id="selProcesos" data-allow-clear="true" style="width:100%"></select>
+        <script type="text/javascript">
+            $("#selProcesos").select2().on('change', function (e) {
+                $.fn.Conexion({
+                    direccion: '/RiesgoOperacional/ListarSubProcesosAreas',
+                    datos: { psCodProceso: $(this).val() },
+                    bloqueo: true,
+                    terminado: function (data) {
+                        datos = JSON.parse(data);
+                        $("#selSubProcesos").selselect2({ dataShow: "cDescSubProceso", dataValue: "nCodSubProceso", datalist: datos.oLstSubProcesoArea });
+                    },
+                });
+            });
+        </script>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-group">
+        <label for="selSubProcesos" class="control-label">Sub-Proceso</label>
+        <select id="selSubProcesos" data-allow-clear="true" style="width:100%"></select>
+        <script type="text/javascript">$("#selSubProcesos").select2();</script>
+    </div>
+</div>

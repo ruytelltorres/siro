@@ -1,0 +1,91 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Reporte - Matriz de riesgo";
+
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius" data-collapsed="0">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Matriz de riesgos para riesgos operacionales - autoevaluaciones</h4>
+                <span>M&oacute;dulo para la generaci&oacute;n del reporte de matriz de riesgo de los riesgos operacionales y las evaluaciones</span>
+            </div>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse" class="btn-panel-filter" role="button" title="Mostrar u ocultar filtros" aria-label="Mostrar u ocultar filtros"><i class="fa fa-filter" aria-hidden="true"></i></a>
+                @*<a href="javascript:CargarDatosTabla()"><i class="entypo-arrows-ccw"></i></a>*@
+
+                <button id="btnGenerarReporte" type="button" class="btn btn-primary btn-block btn-icon">Generar Reporte<i class="fa fa-file-excel-o"></i></button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <div style="min-width: 250px;">
+                                <select id="selTpoRiesgo" class="selectboxit" data-first-option="false">
+                                    <option>Seleccione el tipo de riesgo</option>
+                                    <option value="1" selected>Riesgo Operacional</option>
+                                    <option value="2">Evaluaciones</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div style="min-width: 250px;">
+                                <select id="selArea" class="select2" data-allow-clear="true" style="width:100%">
+                                    <option>Seleccione el &aacute;rea</option>
+                                    <optgroup label="Lista de Áreas">
+                                        @foreach (var areas in Model.oLstAreas)
+                                        {
+                                            <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                                        }
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control text-center datepicker" id="inDesde" data-format="dd/mm/yyyy" placeholder="Desde (opcional)" aria-label="Desde (opcional)" autocomplete="off" />
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control text-center datepicker" id="inHasta" data-format="dd/mm/yyyy" placeholder="Hasta (opcional)" aria-label="Hasta (opcional)" autocomplete="off" />
+                        </div>
+
+                        @*<button id="btnProcesar" type="button" class="btn btn-primary btn-icon">Procesar</button>
+                            <button type="button" id="btnCargar" class="btn btn-primary">
+                                <i class="fa fa-download" aria-hidden="true"></i> Cargar Datos
+                            </button>*@
+
+                        <button type="button" id="btnGenerarMatriz" class="btn btn-primary">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                            Consultar Datos
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" id="content-tbl-matriz-riesgo"></div>
+        <div class="panel-footer" style="padding-right:30px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-left">
+
+                    </div>
+                    <div class="pull-right">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/siro/reporte.matriz.riesgo.js")"></script>

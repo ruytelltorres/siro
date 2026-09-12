@@ -1,0 +1,76 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<!-- story comments -->
+<ul class="comments">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div class="user-comment-thumb">
+                <img src="@item.cFotoUser" alt="" class="img-circle" width="30" />
+            </div>
+            <div class="user-comment-content">
+                <a href="#" class="user-comment-name">
+                    @item.cUsuario
+                </a>
+                @item.cComentario
+                <div class="user-comment-meta">
+                    <a href="#" class="comment-date">@item.dFecha</a>
+                </div>
+
+            </div>
+        </li>
+    }
+    <li class="comment-form">
+        <div class="user-comment-thumb">
+            <img src="@usuario.oPerfil.cUrlImagen" alt="" class="img-circle" width="30" />
+        </div>
+        <div class="user-comment-content">
+            <textarea id="inComentario" class="form-control autogrow" placeholder="Escriba su comentario"></textarea>
+            <button class="btn" id="btnComentario"><i class="entypo-chat"></i></button>
+
+        </div>
+    </li>
+
+</ul>
+
+<script type="text/javascript">
+    var lnComentarios = @Model.Count;
+    var inComentarios = $("#inComentario");
+    inComentarios.keypress(function (e) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        if (keycode == "13") {
+            e.preventDefault();
+            if (gEstadoPlan != 3) {
+                $("#btnComentario").click();
+            } else {
+                inComentarios.val("").prop('disabled', true);
+                $.fn.MensajeProcesos({
+                    posicion: 'A',
+                    mensaje: 'No es posible realizar comentarios sobre los planes de acción en estado implementados.',
+                    titulo: 'Acción no permitido',
+                    tipo_mensaje: 'advertencia'
+                });
+            }
+            return false;
+        }
+    });
+
+    $("#btnComentario").click(function (e) {
+        e.preventDefault();
+        var inComentario = $("#inComentario");
+        $(".story-content footer span").html("(" + lnComentarios + ")");
+         $.fn.Conexion({
+             direccion: "/RiesgoOperacional/GuardaComentarioPlanAccion",
+             datos: { pnPlanCod: gCodPlan, psComentario: inComentario.val().trim() },
+            terminado: function (data) {
+                //if (data.Exito > 0) {
+                    Comentarios();
+                    //$(".story-content footer span").html("("+ lnComentarios + ")");
+                //}
+            },
+        });
+    });
+
+</script>

@@ -1,0 +1,155 @@
+﻿@using System.Collections.Generic
+@{
+    ViewBag.Title = "Inicio";
+
+    Func<dynamic, string, string> obtenerValor = (item, key) =>
+    {
+        var dic = item as IDictionary<string, object>;
+        if (dic != null && dic.ContainsKey(key) && dic[key] != null)
+        {
+            return dic[key].ToString();
+        }
+        return "0";
+    };
+}
+<style>
+    .panel-table {
+        border: none !important;
+    }
+
+        .panel-table .panel-body {
+            background: #F5F5F5;
+            border-radius: 0px;
+            padding: 15px 5px 15px 0px;
+        }
+
+    .home-chart {
+        min-height: 360px;
+    }
+</style>
+
+@*<div class="row">
+    <div class="col-md-12 col-sm-12">*@
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading" style="border: 1px solid #ebebeb !important">
+                <div class="panel-title">
+                    <h3>Riesgos Operacionales <i class="entypo-alert"></i></h3>
+                </div>
+            </div>
+            <div class="panel-body">
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6 clearfix">
+                            <a href="@Url.Action("ListaGestion", "RiesgoOperacional")">
+                                <div class="tile-stats tile-white">
+                                    <div class="icon"><i class="entypo-alert"></i></div>
+                                    <div class="num">@obtenerValor(item, "RiesgoOpe")</div>
+                                    <h3>Riesgos Operacionales</h3>
+                                    <p>Lista de riesgos operacionales de en proceso de gesti&oacute;n</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="clear visible-xs"></div>
+
+                        <div class="col-sm-3 col-xs-6">
+                            <a href="@Url.Action("PlanesAccion", "RiesgoOperacional")">
+                                <div class="tile-stats tile-white">
+                                    <div class="icon"><i class="entypo-address"></i></div>
+                                    <div class="num">@obtenerValor(item, "PlanAccionRiesgoOpe")</div>
+                                    <h3>Planes de Acci&oacute;n</h3>
+                                    <p>Responda o actualize el estado de los planes de acción asignados</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+            <div class="panel-heading" style="border: 1px solid #ebebeb !important">
+                <div class="panel-title">
+                    <h3>Autoevaluaciones <i class="entypo-ccw"></i></h3>
+                </div>
+            </div>
+            <div class="panel-body">
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-6">
+                            <a href="@Url.Action("Lista", "Evaluacion")">
+                                <div class="tile-stats tile-white">
+                                    <div class="icon"><i class="entypo-ccw"></i></div>
+                                    <div class="num">@obtenerValor(item, "Evaluaciones")</div>
+                                    <h3>Gestión de Evaluaciones</h3>
+                                    <p>Gestiona u obtenga reportes de las autoevaluaciones</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="clear visible-xs"></div>
+                        <div class="col-sm-4 col-xs-6">
+                            <a href="#">
+                                <div class="tile-stats tile-white">
+                                    <div class="icon"><i class="entypo-address"></i></div>
+                                    <div class="num">@obtenerValor(item, "PlanAccionEval")</div>
+                                    <h3>Planes de Acci&oacute;n</h3>
+                                    <p>Responda o actualize el estado de los planes de acción asignados</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="clear visible-xs"></div>
+                        <div class="col-sm-4 col-xs-12">
+                            <a href="@Url.Action("Lista", "Evaluacion")">
+                                <div class="tile-stats tile-white">
+                                    <div class="icon"><i class="entypo-hourglass"></i></div>
+                                    <div class="num">@obtenerValor(item, "EvaluacionesPendientes")</div>
+                                    <h3>Evaluaciones Pendientes</h3>
+                                    <p>Cantidad total de evaluaciones en estado pendiente</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="panel-heading" style="border: 1px solid #ebebeb !important">
+                <div class="panel-title">
+                    <h3>Evento de P&eacute;rdida <i class="entypo-chart-line"></i></h3>
+                </div>
+            </div>
+            <div class="panel-body" style="background:#FFFFFF; padding: 20px 15px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">Distribución de eventos de pérdida</div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="graf-home-distribucion-eventos" class="home-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">Tendencia de pérdida bruta vs recuperación</div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="graf-home-perdida-vs-recuperacion" class="home-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @*</div>
+</div>*@
+
+<script src="@Url.Content("~/Content/Assets/js/highcharts/highcharts.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/highcharts/exporting.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/inicio.home.js")"></script>
+
+

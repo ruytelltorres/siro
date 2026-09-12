@@ -1,0 +1,32 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Riesgo Operacional - Gestión del riesgo";
+
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+
+<script type="text/javascript">
+    var gDatosRiesgo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.oDatosRiesgo));
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title no-margin">
+                <h4>Gesti&oacute;n del riesgo operacional: <b>@Model.oDatosRiesgo.cCodRiesgo</b></h4>
+                <span>Módulo para el tratamiento del riesgos operacionales, para ver más detalle del riesgo haga  <a href="javascript:MostrarDetalleRiesgo(@Model.oDatosRiesgo.nNroRiesgo, 1)"><strong>click aquí</strong></a></span>
+            </div>
+            
+        </div>
+        <div class="panel-body">
+            @Html.Partial("GestionRiesgo/_GestionRiesgo")
+        </div>
+    </div>
+</div>
+
+@Html.Partial("GestionRiesgo/_ModalGestionRiesgo")
+
+
+
+

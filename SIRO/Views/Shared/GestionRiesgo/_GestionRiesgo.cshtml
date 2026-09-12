@@ -1,0 +1,354 @@
+﻿<form id="rootwizard" class="form-wizard">
+
+    <div class="steps-progress">
+        <div class="progress-indicator" data-now-value="5" data-number-of-steps="5" style="width: 100%;"></div>
+    </div>
+
+    <ul id="rootwizardtab">
+        <li>
+            <a href="#Paso1" data-toggle="tab"><span>1</span>Identificación del Riesgo</a>
+        </li>
+        <li>
+            <a href="#Paso2" data-toggle="tab"><span>2</span>Nivel de Riesgo Inherente</a>
+        </li>
+        <li>
+            <a href="#Paso3" data-toggle="tab"><span>3</span>Nivel de Riesgo Residual</a>
+        </li>
+        <li>
+            <a href="#Paso4" data-toggle="tab"><span>4</span>Planes de Acción</a>
+        </li>
+        <li>
+            <a href="#Paso5" data-toggle="tab"><span>5</span>Definición de Responsable</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="Paso1">
+
+            <section class="features-blocks">
+                <div class="row vspace">
+                    <div class="col-md-12">
+                        <div class="feature-block">
+                            <h3><i class="entypo-chat"></i>Observaci&oacute;n <small>(Describa su observación para la solicitud de modificación)</small></h3>
+                            <textarea class="form-control scrolltextarea" id="inObserva_1" name="inObserva_1"
+                                      data-validate="minlength[1]" rows="3" placeholder="Describa su observación" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="selFactorRiesgo">Factor del Riesgo</label>
+                        <select id="selFactorRiesgo" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="selEventoPerdida">Tipo de Evento de Pérdida</label>
+                        <select id="selEventoPerdida" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="selSubEventoPerdida">Sub Tipo de Evento de Pérdida</label>
+                        <select id="selSubEventoPerdida" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+
+
+            </div>
+            @*<div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="selEventoPerdida">Tipo de Evento de Pérdida</label>
+                            <select id="selEventoPerdida" class="selectboxit" data-size="8" data-first-option="false"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="selSubEventoPerdida">Sub Tipo de Evento de Pérdida</label>
+                            <select id="selSubEventoPerdida" class="selectboxit" data-size="8" data-first-option="false"></select>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="selLineaNegocio">Linea de Negocio</label>
+                        <select id="selLineaNegocio" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="selProducto">Producto</label>
+                        <select id="selProducto" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label" for="selSubProducto">Sub-Producto</label>
+                        <select id="selSubProducto" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="selSubProducto">Sub-Producto</label>
+                            <select id="selSubProducto" class="selectboxit" data-size="8" data-first-option="false"></select>
+                        </div>
+                    </div>
+                </div>*@
+
+        </div>
+
+        <div class="tab-pane" id="Paso2">
+
+            <section class="features-blocks">
+                <div class="row vspace">
+                    <div class="col-md-12">
+                        <div class="feature-block">
+                            <h3><i class="entypo-chat"></i>Observaci&oacute;n <small>(Describa su observación para la solicitud de modificación)</small></h3>
+                            <textarea class="form-control scrolltextarea" id="inObserva_2" name="inObserva_2"
+                                      data-validate="minlength[1]" rows="3" placeholder="Describa su observación" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label" for="selProbabilidad">Probabilidad</label>
+                        <select id="selProbabilidad" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label" for="selImpacto">Impacto</label>
+                        <select id="selImpacto" class="selectboxit" data-size="8" data-first-option="false"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tile-stats tile-white tile-white-primary">
+                        <div class="icon"><i class="entypo-attention nivel-riesgo-inherente"></i></div>
+                        <div id="DescNivelRiesgoInherente" class="num"></div>
+                        <h3>Riesgo Inherente</h3>
+                        <p>Nivel de riesgo inherente calculado</p>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="tile-stats tile-white">
+                        <div class="icon"><i class="fa fa-money" style="color: #dedede"></i></div>
+                        <div id="DescMontoPerdida" class="num"></div>
+                        <h3>Monto de P&eacute;rdida</h3>
+                        <p>Posible monto de p&eacute; asociado al riesgo</p>
+                    </div>
+
+                </div>
+            </div>
+            @*<div class="row">
+                    <div class="col-md-2 col-sm-2"></div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="tile-stats tile-white">
+                            <div class="icon"><i class="entypo-attention nivel-riesgo-inherente"></i></div>
+                            <div id="DescNivelRiesgoInherente" class="num"></div>
+
+                            <h3>Riesgo Inherente</h3>
+                            <p>Nivel de riesgo inherente calculado</p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 col-sm-4">
+                        <div class="tile-stats tile-white">
+                            <div class="icon"><i class="fa fa-money" style="color: #dedede"></i></div>
+                            <div id="DescMontoPerdida" class="num"></div>
+
+                            <h3>Monto de Pérdida</h3>
+                            <p>Posible monto de pérdida asociado al riesgo</p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-2 col-sm-2"></div>
+                </div>*@
+
+        </div>
+
+        <div class="tab-pane" id="Paso3">
+            <section class="features-blocks" id="MP3">
+                <div class="row vspace">
+                    <div class="col-md-12">
+                        <div class="feature-block">
+                            <h3><i class="entypo-chat"></i>Observaci&oacute;n <small>(Describa su observación para la solicitud de modificación)</small></h3>
+                            <textarea class="form-control scrolltextarea" id="inObserva_3" name="inObserva_3"
+                                      data-validate="minlength[1]" rows="3" placeholder="Describa su observación" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary panel-table" style="border: none !important">
+                        <div class="panel-heading">
+                            <div class="panel-title" style="padding:30px 4px 20px 0">
+                                <h4><strong>Controles Riesgo Residual</strong> <a href="#" onclick="MostrarPanelInfo(3)" class="entypo-info-circled"></a></h4>
+                                <span>Lista de controles asignados al riesgo residual</span>
+                            </div>
+
+                            <div class="panel-options">
+                                <button type="button" class="btn btn-primary" onclick="ModalCriteriosEvalucion()">Agregar control</button>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="content-tbl-controles-riesgo-residual"></div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="tile-stats tile-white cCalEfect">
+                                    <div class="icon"><i class="entypo-gauge calif-efect-control"></i></div>
+                                    <div class="num"></div>
+                                    <h3>Calificaci&oacute;n Control(es)</h3>
+                                    <p>Calificación de la efectividad de control</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="tile-stats tile-white cNivResidual">
+                                    <div class="icon"><i class="entypo-attention nivel-riesgo-residual"></i></div>
+                                    <div class="num"></div>
+                                    <h3>Riesgo Residual</h3>
+                                    <p>Nivel resultante del riesgo con probabilidad <strong id="DesProbRiesgoResidual"></strong> e impacto <strong id="DescImpacRiesgoResidual"></strong></p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <div class="tile-stats tile-white cApetitoRiesgo">
+                                    <div class="icon"><i class="entypo-thumbs-up apetito-riesgo"></i></div>
+                                    <div class="num"></div>
+
+                                    <h3>Apetito al riesgo</h3>
+                                    <p>Posible monto de pérdida asociado al riesgo</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" for="inComentariosRiesgoresidual">Comentarios</label>
+                        <textarea class="form-control" id="inComentariosRiesgoresidual" data-validate="minlength[10]" rows="5" placeholder="(Opcional) Comentarios adicionales sobre el riesgo residual"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane" id="Paso4">
+            <section class="features-blocks">
+                <div class="row vspace">
+                    <div class="col-md-12">
+                        <div class="feature-block">
+                            <h3><i class="entypo-chat"></i>Observaci&oacute;n <small>(Describa su observación para la solicitud de modificación)</small></h3>
+                            <textarea class="form-control scrolltextarea" id="inObserva_4" name="inObserva_4"
+                                      data-validate="minlength[1]" rows="3" placeholder="Describa su observación" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="row">
+                @*<div class="col-md-12">*@
+                <div class="panel panel-primary panel-table">
+                    <div class="panel-heading">
+                        <div class="panel-title" style="padding:10px 0 10px 0">
+                            <h4><strong>Planes de Acción</strong></h4>
+                            <span>Planes de acci&oacute;n asignados al riesgo, haga <a href="javascript:MostrarPanelInfo(4)">click aqu&iacute;</a> para conocer el detalle de los estados</span>
+                        </div>
+                        @*<div class="panel-options">
+                                <a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+                            </div>*@
+                    <div class="panel-options">
+                        <button type="button" class="btn btn-primary" onclick="ModalAddPlanAccion()">Agregar plan de acción</button>
+                    </div>
+                    </div>
+                    <br />
+                    <div id="content-tbl-plan-accion"></div>
+
+                </div>
+
+                @*</div>*@
+            </div>
+        </div>
+
+        <div class="tab-pane" id="Paso5">
+            <div class="row">
+                @*<div class="col-md-12">*@
+                <div class="panel panel-primary panel-table">
+                    <div class="panel-heading">
+                        <div class="panel-title" style="padding:10px 0 10px 0">
+                            <h4><strong>Definici&oacute;n de Respondables</strong></h4>
+                            <span>Asignaci&oacute;n de responsable(s) a los planes de acci&oacute;n implementados</span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" id="sec_add_responsable">
+                        <div class="col-md-5" style="padding-left: 0 !important">
+                            <div class="form-group">
+                                <select id="selAreaRespon" class="select2" style="width:100%" placeholder="Seleccione el área"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-5" style="padding-left: 0 !important">
+                            <div class="form-group">
+                                <select id="selUserResponsablePlan" class="select2" style="width:100%;" placeholder="Selecccione el usuario"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button id="btnAddUserResponsable" type="button" class="btn btn-primary btn-block btn-icon">Añadir<i class="entypo-user-add"></i></button>
+                        </div>
+                    </div>
+                    <div id="content-tbl-responsable-plan-accion"></div>
+
+                </div>
+
+                @*</div>*@
+            </div>
+        </div>
+        <ul class="pager wizard">
+            <li class="previous btn-primary">
+                <a href="#"><i class="entypo-left-open"></i> Anterior</a>
+            </li>
+            <li class="action">
+                <a href="#" class="btngestion" id="btnGrabaPaso1">Grabar <span class="siro-save-1"></span></a>
+                <a href="#" class="btngestion" id="btnGrabaPaso2">Grabar <span class="siro-save-2"></span></a>
+                <a href="#" class="btngestion" id="btnGrabaPaso3">Grabar <span class="siro-save-3"></span></a>
+                <a href="#" class="btngestion" id="btnGrabaPaso4">Grabar <span class="siro-save-4"></span></a>
+                <a href="#" class="btngestion" id="btnGrabaPaso5">Grabar <span class="siro-save-5"></span></a>
+                <a href="#" class="btngestion" id="btnConfirmaObs">Confirmar Observaciones</a>
+                <a href="#" class="btngestion" id="btnObservaciones">Emitir Observaciones</a>
+            </li>
+            <li class="next btn-primary">
+                <a href="#">Siguiente <i class="entypo-right-open"></i></a>
+            </li>
+        </ul>
+
+    </div>
+</form>

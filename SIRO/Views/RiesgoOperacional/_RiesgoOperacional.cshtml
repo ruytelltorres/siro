@@ -1,0 +1,331 @@
+﻿
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="inRiesgoIdentificado" class="control-label">Riesgo identificado</label>
+            <textarea class="form-control scrolltextarea" id="inRiesgoIdentificado" data-validate="minlength[10]" rows="5" placeholder="Descripción del riesgo identificado" style="width:100%" tabindex="1">@if (Model.oRiesgoOperacional != null) { @Model.oRiesgoOperacional.cRiesgoIdentiticado}</textarea>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="selAgencias" class="control-label">Agencia afectada</label>
+            <select id="selAgencias" class="select2" data-allow-clear="true" style="width:100%" tabindex="2">
+                <option></option>
+                <optgroup label="Lista de Agencias">
+                    @{
+                        foreach (var agencias in Model.oLstAgencia)
+                        {
+                            if (Model.oRiesgoOperacional != null)
+                            {
+                                if (Model.oRiesgoOperacional.oAgencia.cAgeCod == agencias.cAgeCod)
+                                {
+                                    <option value=@agencias.cAgeCod selected> @agencias.cAgeDescripcion</option>
+                                }
+                                else
+                                {
+                                    <option value=@agencias.cAgeCod> @agencias.cAgeDescripcion</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@agencias.cAgeCod>@agencias.cAgeDescripcion</option>
+                            }
+                        }
+                    }
+                </optgroup>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="selAreas" class="control-label">Áreas afectada</label>
+            <select id="selAreas" class="select2" data-allow-clear="true" style="width:100%" tabindex="3">
+                <option></option>
+                <optgroup label="Listas de Áreas">
+                    @{
+                        foreach (var areas in @Model.oLstAreas)
+                        {
+                            if (Model.oRiesgoOperacional != null)
+                            {
+                                if (Model.oRiesgoOperacional.oAgencia.oArea.cAreaCod == areas.cAreaCod)
+                                {
+                                    <option value=@areas.cAreaCod selected> @areas.cAreaDescripcion</option>
+                                }
+                                else
+                                {
+                                    <option value=@areas.cAreaCod> @areas.cAreaDescripcion</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                            }
+                        }
+                    }
+                </optgroup>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="selCausaRiesgo" class="control-label">Causas</label>
+            <select id="selCausaRiesgo" class="select2" multiple="multiple" style="width:100%" data-placeholder="Seleccione la(s) causa(s) del riesgo" tabindex="7">
+                @{
+                    //string[] lsCausas = Model.oRiesgoOperacional != null ? Convert.ToString(Model.oRiesgoOperacional.oCausas.cCodCausa).Split('|') : null;
+                    string lsCausas = Model.oRiesgoOperacional != null ? Convert.ToString(Model.oRiesgoOperacional.oCausas.cCodCausa).Replace(" ", "") : null;
+
+                    if (Model.oRiesgoOperacional != null)
+                    {
+                        foreach (var causas in Model.oLstCausas)
+                        {
+                            if (lsCausas.Contains(causas.cCodCausa))
+                            {
+                                <option value=@causas.cCodCausa selected>@causas.cCausaDesc</option>
+                            }
+                            else
+                            {
+                                <option value=@causas.cCodCausa>@causas.cCausaDesc</option>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var causas in Model.oLstCausas)
+                        {
+                            <option value=@causas.cCodCausa>@causas.cCausaDesc</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+</div>
+
+@*@if (usuario.cRHCargoCod == "005011") //Cargo de los analistas de riesgo operacionales
+    {*@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="selProcesos" class="control-label">Procesos</label>
+            @if (Model.oRiesgoOperacional != null)
+            {
+                <select id="selProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="8">
+                    <optgroup label="Listas de Áreas">
+                        @foreach (var proceso in @Model.oLstProcesoAreas)
+                        {
+                            if (Model.oRiesgoOperacional != null)
+                            {
+                                if (Model.oRiesgoOperacional.oProceso.cCodProceso == proceso.cCodProceso)
+                                {
+                                    <option value=@proceso.cCodProceso selected> @proceso.cDescProceso</option>
+                                }
+                                else
+                                {
+                                    <option value=@proceso.cCodProceso> @proceso.cDescProceso</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@proceso.cCodProceso>@proceso.cDescProceso</option>
+                            }
+
+                        }
+                    </optgroup>
+                </select>
+            }
+            else
+            {
+                <select id="selProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="8"></select>
+            }
+
+
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="selSubProcesos" class="control-label">Sub procesos</label>
+            @if (Model.oRiesgoOperacional != null)
+            {
+                <select id="selSubProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="9">
+                    <optgroup label="Listas de Áreas">
+                        @foreach (var subproceso in @Model.oLstSubProcesoAreas)
+                        {
+                            if (Model.oRiesgoOperacional != null)
+                            {
+                                if (Model.oRiesgoOperacional.oProceso.oSubProceso.nCodSubProceso == subproceso.nCodSubProceso)
+                                {
+                                    <option value=@subproceso.nCodSubProceso selected> @subproceso.cDescSubProceso</option>
+                                }
+                                else
+                                {
+                                    <option value=@subproceso.nCodSubProceso> @subproceso.cDescSubProceso</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value=@subproceso.nCodSubProceso>@subproceso.cDescSubProceso</option>
+                            }
+
+                        }
+                    </optgroup>
+                </select>
+            }
+            else
+            {
+                <select id="selSubProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="9"></select>
+            }
+        </div>
+    </div>
+</div>
+@*}
+    else
+    {
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group">
+                <label for="field-5" class="control-label">Sub Proceso</label>
+                <select id="selSubProcesos" class="select2" data-allow-clear="true" style="width:100%"></select>
+
+            </div>
+        </div>
+    }*@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title bold">
+                    <h4>Definici&oacute;n de controles</h4>
+                    <span>Agrega los controles identificados para el riesgo operacional reportado</span>
+                </div>
+                <div class="panel-options">
+                    <button type="button" class="btn btn-primary" onclick="AgregarControl()">Agregar control</button>
+                    @*<a href="javascript:eliminarFila()"><i class="entypo-trash"></i></a>*@
+                </div>
+            </div>
+
+            <table id="tbl-controles-riesgo" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td class="text-center bold text-primary" width="60%">Descripci&oacute;n del control</td>
+                        <td class="text-center bold text-primary" width="5%">Acci&oacute;n</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.oRiesgoOperacional != null)
+                    {
+                        if (Model.oLstRiesgoResidual != null)
+                        {
+                            int nItemControl = 0;
+                            foreach (var controles in Model.oLstRiesgoResidual)
+                            {
+                                nItemControl++;
+                                string cID_Control = "ctrl" + Convert.ToString(nItemControl);
+                                <tr id="@cID_Control">
+                                    <td class="text-justify">@controles.cComentario</td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <i class="entypo-dot-3"></i><span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-default pull-right">
+                                                <li>
+                                                    <a href="javascript:EliminarControl(@nItemControl)">
+                                                        <i class="entypo-trash"></i>
+                                                        Eliminar
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!--Comentado por adecuacion de la nueva metodologia-->
+    @*<div class="col-md-7">
+            <div class="form-group">
+                <label for="selControlProcesos" class="control-label">Control Existente</label>
+                @if (Model.oRiesgoOperacional != null)
+                {
+                    <select id="selControlProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="7">
+                        <optgroup label="Listas de Áreas">
+                            @foreach (var controlProceso in @Model.oLstControlProcesos)
+                            {
+                                if (Model.oRiesgoOperacional != null)
+                                {
+                                    if (Model.oRiesgoOperacional.oControlAreas.nCodControl == controlProceso.nCodControl)
+                                    {
+                                        <option value=@controlProceso.nCodControl selected> @controlProceso.cControlDescripcion</option>
+                                    }
+                                    else
+                                    {
+                                        <option value=@controlProceso.nCodControl> @controlProceso.cControlDescripcion</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value=@controlProceso.nCodControl>@controlProceso.cControlDescripcion</option>
+                                }
+
+                            }
+                        </optgroup>
+                    </select>
+                }
+                else
+                {
+                    <select id="selControlProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="7"></select>
+                }
+            </div>
+        </div>*@
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label for="inFechaDeteccion" class="control-label">Fecha de detecci&oacute;n</label>
+            <input class="form-control" name="inFechaDeteccion" id="inFechaDeteccion" data-mask="date" placeholder="Fecha" tabindex="8" value="@if (Model.oRiesgoOperacional != null) { @Model.oRiesgoOperacional.dFechaDeteccion}" />
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="chkEfectividadControl" class="control-label">¿Control efectivo?</label>
+            <br />
+            <div class="make-switch switch-default check-control-efectivo" data-on-label="Si" data-off-label="No">
+                @if (Model.oRiesgoOperacional != null)
+                {
+                    <input type="checkbox" id="chkEfectividadControl" @(Model.oRiesgoOperacional.bControlEfectivo ? "checked=true" : string.Empty)>
+                }
+                else
+                {
+                    <input type="checkbox" id="chkEfectividadControl">
+                }
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="inObservacion" class="control-label">Efectos del riesgo identificado</label>
+            <textarea class="form-control scrolltextarea" id="inObservacion" name="inObservacion" data-validate="minlength[10]" rows="5" placeholder="(Opcional) Indicar en que consiste y afecta el riesgo" style="width:100%;" tabindex="9">@if (Model.oRiesgoOperacional != null) { @Model.oRiesgoOperacional.cEfectosRiesgo}</textarea>
+        </div>
+    </div>
+</div>
+
+

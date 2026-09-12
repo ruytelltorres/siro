@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Riesgo Operacional - Incentivos";
+}
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius" data-collapsed="0">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Gesti&oacute;n de incentivos</h4>
+                <span>M&oacute;dulo de gesti&oacute;n de Incentivos</span>
+            </div>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse" class="btn-panel-filter" role="button" title="Mostrar u ocultar filtros" aria-label="Mostrar u ocultar filtros"><i class="fa fa-filter" aria-hidden="true"></i></a>
+                <button id="btnGenerarReporte" type="button" class="btn btn-primary btn-icon">Exportar<i class="fa fa-file-excel-o"></i></button>
+                @*<button type="button" id="btnGenerarReporte" class="btn btn-primary">Generar</button>*@
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="sr-only" for="inAnio">A&ntilde;o</label>
+                            <input class="form-control text-center" id="inAnio" maxlength="4" placeholder="A&ntilde;o" onkeypress="return val_09(event);" autocomplete="off" style="width: 85px;" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only" for="selTrimestre">Trimestre</label>
+                            <div style="min-width: 180px;">
+                                <select id="selTrimestre" class="selectboxit">
+                                    <option value="1">I</option>
+                                    <option value="2">II</option>
+                                    <option value="3">III</option>
+                                    <option value="4">IV</option>
+                                    <option value="5" selected>Todos los trimestes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        @*<button id="btnProcesar" type="button" class="btn btn-primary btn-icon">Procesar</button>
+                        <button type="button" id="btnCargar" class="btn btn-primary">
+                            <i class="fa fa-download" aria-hidden="true"></i> Cargar Datos
+                        </button>*@
+                        
+                        <button type="button" id="btnProcesar" class="btn btn-primary">
+                            <i class="fa fa-refresh" aria-hidden="true"></i> 
+                            Consultar Datos
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" id="content-tbl-gestion-riesgo-incentivo"></div>
+        <div class="panel-footer" style="padding-right: 0; padding-top: 0">
+            <div class="row">
+                <div class="col-md-8">
+                    @*<table class="table-bordered" style="width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td class="col-lg-3 trTitulo"><strong>Leyenda</strong><br /><small>(Nivel Riesgo Inherente)</small></td>
+                                    <td class="col-lg-3 trValor">
+                                        <span class="badge mapa-calor-bajo">&nbsp;</span><strong>Bajo</strong>
+                                        <span class="badge mapa-calor-moderado">&nbsp;</span><strong>Moderado</strong>
+                                        <span class="badge mapa-calor-alto">&nbsp;</span><strong>Alto</strong>
+                                        <span class="badge mapa-calor-extremo">&nbsp;</span><strong>Extremo</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+                </div>
+                <div class="col-md-4" style="padding: 0">
+                    <table class="table-bordered" style="width: 100%">
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-3 trTitulo"><strong>Propuesto</strong><span class="pull-right" style="padding-right: 5px"><strong>S/</strong></span></td>
+                                <td class="col-lg-3 text-center trValor" id="td_MontoPropuesto"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-3 trTitulo"><strong>Pagado</strong><span class="pull-right" style="padding-right: 5px"><strong>S/</strong></span></td>
+                                <td class="col-lg-3 text-center trValor" id="td_MontoPagado"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade custom-width" id="modal-gestion-incentivo" data-backdrop="static">
+    <div class="modal-dialog" style="width: 55%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><strong>Incentivo</strong></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="inMontoIncPaga" class="col-md-12 control-label">Monto Incentivo</label>
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="color:#303641;border-color:#C7CCD5"><strong>S/</strong></span>
+                                    <input type="text" id="inMontoIncPaga" class="form-control text-right" placeholder="0.00" onkeypress="return val_09(event);" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="selMotivoIncentivo" class="col-md-12 control-label">Motivo del Incentivo</label>
+                            <div class="col-md-12">
+                                <select id="selMotivoIncentivo" class="selectboxit" data-first-option="false"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inComentario" class="col-md-3 control-label">Comentarios</label>
+                            <div class="col-md-12">
+                                <textarea class="form-control scrolltextarea" id="inComentario" name="inComentario" data-validate="minlength[10]" rows="5" placeholder="(Opcional) ¿porqué otorga el incentivo?" style="width:100%" tabindex="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div id="tbl-doc-adjunto"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default" id="btnAjuntarDoc">Adjuntar</button>
+                    <button type="button" class="btn btn-primary" id="btnGrabaGestion">Grabar</button>
+                    @*<button type="button" class="btn btn-primary" id="btnActualizaGestion">Grabar</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="@Url.Content("~/Content/Assets/js/numeral/numeral.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/riesgoope.gestion.incentivos.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/FileUploader.js")"></script>

@@ -1,0 +1,32 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Evento Pérdida - Registro";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+   var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+   var gModelo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Registro de evento de p&eacute;rdida</h4>
+                <span>M&oacute;dulo para el registro de los evento de p&eacute;rdida</span>
+            </div>
+            <div class="panel-options">
+                <button id="btnGrabar" type="button" class="btn btn-primary btn-block btn-icon" tabindex="16">Guardar<i class="entypo-floppy"></i></button>
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff">
+            @Html.Partial("_EventoPerdida");
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Assets/js/numeral/numeral.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/eventoperdida.registro.js")"></script>
+
+
+
+

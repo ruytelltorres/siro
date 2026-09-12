@@ -1,0 +1,31 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Autoevaluación - Gestión del riesgo";
+
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gDatosRiesgo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.oEvaluaciones));
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title no-margin">
+                <h4>Gesti&oacute;n de la autoevaluaci&oacute;n: <b> @Model.oEvaluaciones.cCodRiesgo </b> </h4>
+                <span>Módulo para el tratamiento de las evaluaciones, para ver más detalle del riesgo haga  <a href="#" onclick="MostrarDetalleRiesgo(@Model.oEvaluaciones.nNroRiesgo, 2);"><strong>click aquí</strong></a></span>
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff">
+            @Html.Partial("GestionRiesgo/_GestionRiesgo")
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("GestionRiesgo/_ModalGestionRiesgo")
+
+
+
+

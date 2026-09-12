@@ -1,0 +1,289 @@
+﻿
+@{
+    ViewBag.Title = "Reporte - Gráficos";
+}
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius" data-collapsed="0">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Miselanea de reportes gr&aacute;ficos</h4>
+                <span>Visualice los reportes gr&aacute;ficos sobre Riesgos Operacionales, Evaluaciones, Evento de P&eacute;rdida</span>
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff">
+            <div class="row col-md-12">
+                <div id="tabs-derecha">
+                    <ul>
+                        <li class="active"><a href="#riesgo_ope" data-toggle="tab">Riesgos Operacionales</a></li>
+                        <li><a href="#evaluaciones" data-toggle="tab">Evaluaciones</a></li>
+                        <li><a href="#evento_perdida" data-toggle="tab">Evento de P&eacute;rdida</a></li>
+                    </ul>
+                    <div class="tab-content">
+
+                        <div class="tab-pane active" id="riesgo_ope">
+
+                            <div class="panel-group" id="accordion-ope">
+                                <!--Cantidad de riesgos operacionales por estado-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ope" href="#sec-ope-graf-001" aria-expanded="false" class="collapsed">
+                                                Clasificaci&oacute;n - Estado Actual del Riesgo
+                                            </a>
+                                            @*<span>Muestra la cantidad de riesgos operacionales por estado</span>*@
+                                        </h4>
+
+                                    </div>
+                                    <div id="sec-ope-graf-001" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <div class="col-md-12">
+                                                @*<div class="alert alert-info">
+                                                    <strong>Importante !!!,</strong>
+                                                    Actualmente en el sistema se cuenta con <strong id="val-alert-001"></strong> resgistros.
+                                                </div>*@
+                                                <figure class="highcharts-figure">
+                                                    @*<figcaption>text</figcaption>*@
+                                                    <div id="graf-riesgo-ope-estado"></div>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Total de riesgos operacionales por año-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ope" href="#sec-ope-graf-002" aria-expanded="false" class="collapsed">
+                                                Clasificaci&oacute;n - Total por A&ntilde;o
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ope-graf-002" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <div class="col-md-12">
+                                                <figure class="highcharts-figure">
+                                                    @*<figcaption>text</figcaption>*@
+                                                    <div id="graf-riesgo-ope-riesgos-anio"></div>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Porcentaje de las causas de riesgos-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ope" href="#sec-ope-graf-003" aria-expanded="false" class="collapsed">
+                                                Clasificaci&oacute;n - Causas del Riesgo
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ope-graf-003" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <div class="col-md-12">
+                                                <figure class="highcharts-figure">
+                                                    @*<figcaption>text</figcaption>*@
+                                                    <div id="graf-riesgo-ope-causas-porcentaje"></div>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Riesgos Operacionales el proceso de gestion-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ope" href="#sec-ope-graf-004" aria-expanded="false" class="collapsed">
+                                                Clasificaci&oacute;n - Factor de Riesgo
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ope-graf-004" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <div class="col-md-12">
+                                                <figure class="highcharts-figure">
+                                                    <div id="graf-riesgo-factor"></div>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Riesgos Operacionales el proceso de gestion-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ope" href="#sec-ope-graf-005" aria-expanded="false" class="collapsed">
+                                                Planes de Acci&oacute;n
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ope-graf-005" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <div class="col-md-12">
+                                                <figure class="highcharts-figure">
+                                                    <div id="graf-riesgo-ope-plan-accion"></div>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="evaluaciones">
+
+                            <div class="panel-group" id="accordion-eval">
+                                <!--Perdida Neta - Tipo Evento de Perdida-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-eval" href="#sec-eval-graf-001" aria-expanded="false" class="collapsed">
+                                                P&eacute;rdida Neta por tipo de Evento de P&eacute;rdida
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-eval-graf-001" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body">
+                                            <div id="DonutGrafNivelRiesgo" class="morrischart" style="height: 300px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane" id="evento_perdida">
+                            <div class="panel-group" id="accordion-ep">
+                                <!--Perdida Neta - Tipo Evento de Perdida-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ep" href="#sec-ep-graf-001" aria-expanded="false" class="collapsed">
+                                                P&eacute;rdida Neta por tipo de Evento de P&eacute;rdida
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ep-graf-001" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color:#FFFFFF">
+                                            <figure class="highcharts-figure">
+                                                <div id="graf-perdida-neta-clase-evento"></div>
+                                                @*<figcaption>text</figcaption>*@
+                                            </figure>
+                                            <hr />
+                                            <div id="content-tbl-perdida-neta-tipo-clase-evento"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Perdida Neta vs Monto Bruto-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ep" href="#sec-ep-graf-002" class="collapsed" aria-expanded="false">P&eacute;rdida Neta vs Monto Bruto</a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ep-graf-002" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="panel-body" style="background-color:#FFFFFF">
+                                            <figure class="highcharts-figure">
+                                                <div id="graf-perdida-neta-vs-monto-bruto"></div>
+                                                @*<figcaption>text</figcaption>*@
+                                            </figure>
+
+                                            <hr />
+                                            <div id="content-tbl-perdida-neta-vs-monto-bruto"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Monto Bruto vs Monto Recuperado-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ep" href="#sec-ep-graf-003" class="" aria-expanded="true">Monto Bruto vs Monto Recuperado</a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ep-graf-003" class="panel-collapse collapse" aria-expanded="true" style="">
+                                        <div class="panel-body" style="background-color:#FFFFFF">
+                                            <div class="col-md-12">
+                                                <figure class="highcharts-figure">
+                                                    <div id="graf-monto-bruto-vs-monto-recup"></div>
+                                                    @*<figcaption>text</figcaption>*@
+                                                </figure>
+
+                                                @*<hr />
+                                                <div id="content-tbl-monto-bruto-vs-monto-recuperado"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Perdida Neta vs Monto Bruto por Agencia-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ep" href="#sec-ep-graf-004" class="" aria-expanded="true">P&eacute;rdida Neta vs Monto Bruto por Agencia</a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ep-graf-004" class="panel-collapse collapse" aria-expanded="true" style="">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <figure>
+                                                <div id="graf-perdida-neta-vs-monto-bruto-agencia"></div>
+                                                @*<figcaption>text</figcaption>*@
+                                            </figure>
+
+                                            <hr />
+                                            <div id="content-tbl-perdida-neta-vs-monto-bruto-agencia"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Cantidad de Eventos de Perdida por Año-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title" style="padding: 5px 10px">
+                                            <a data-toggle="collapse" data-parent="#accordion-ep" href="#sec-ep-graf-005" class="" aria-expanded="true">Cantidad de Eventos de P&eacute;rdida por A&ntilde;o</a>
+                                        </h4>
+                                    </div>
+                                    <div id="sec-ep-graf-005" class="panel-collapse collapse" aria-expanded="true" style="">
+                                        <div class="panel-body" style="background-color: #FFFFFF">
+                                            <figure class="highcharts-figure">
+                                                <div id="graf-cantidad-evento-perdida-anio"></div>
+                                                @*<figcaption>text</figcaption>*@
+                                            </figure>
+                                            <hr />
+                                            <div id="content-tbl-cantidad-evento-perdida-anio"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="@Url.Content("~/Content/Assets/js/highcharts/highcharts.js")"></script>
+@*<script src="@Url.Content("~/Content/Assets/js/highcharts/variable-pie.js")"></script>*@
+<script src="@Url.Content("~/Content/Assets/js/highcharts/highcharts-3D.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/highcharts/exporting.js")"></script>
+<script src="@Url.Content("~/Content/assets/js/jquery.bootstrap.wizard.min.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/reporte.graficos.js")"></script>
+

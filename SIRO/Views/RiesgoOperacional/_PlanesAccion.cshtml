@@ -1,0 +1,135 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio;
+@using SIRO.Utils.Constantes;
+@model SIRO.Models.Paginador<PlanAccion>
+
+@{
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+
+
+<br />
+<div class="gallery-env">
+
+    @if (Model.resultado.Count() > 0)
+    {
+        foreach (var data in Model.resultado)
+        {
+
+            <div class="col-sm-2 col-md-4">
+                <article class="album">
+                    <header>
+                        <a class="album-options"><i class="@data.cIconoEstado"></i>@data.cEstado</a>
+                    </header>
+
+                    <section class="album-info">
+                        <h3>Plan de acci&oacute;n: <a href="javascript:bootbox.alert({title: '<strong>Plan de Acción: '+ @data.nPlanCod +'</strong>', message: '@data.cPlanDescripcion', closeButton: false});"><strong>@data.nPlanCod</strong></a></h3>
+                        <small>
+                            @*Riesgo vinculado*@
+                            <a href="javascript:DetalleRiesgo(@data.oDatosRiesgo.nNroRiesgo)">
+                                <i class="entypo-alert"></i>
+                                @data.oDatosRiesgo.cCodRiesgo
+                            </a>
+                            <a>
+                                <i class="entypo-users"></i>
+                                @if (data.nEstado == 1 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO)
+                                {
+                                    @data.oReponsablePlanAccion.cConfrimados
+                                }
+                            </a>
+                        </small>
+                        <hr class="no-margin"/>
+                        <div class="scrollable">
+                            <p class="text-primary">@data.cPlanDescripcion</p>
+                        </div>
+                    </section>
+
+                    <footer>
+                        <div class="album-options">
+                            <a href="javascript:ComentariosPlanAccion(@data.oDatosRiesgo.nNroRiesgo, @data.nPlanCod)" title="Comentarios sobre el plan de acción"><i class="entypo-chat"></i></a>
+                        </div>
+                        @{
+                            if (data.nEstado == 1 &&
+                                Convert.ToString(data.oReponsablePlanAccion.cUserResponsable).Contains(usuario.cUser) == true &&
+                                Convert.ToString(data.oReponsablePlanAccion.cUserConfrimados).Contains(usuario.cUser) == false)
+                            {
+                                <div class="album-images-count" style="padding: 6px 0px 0px 5px">
+                                    <button id="btnConfirmarAsignacion" type="button" class="btn btn-primary btn-sm btn-block btn-icon" onclick="javascript:ConfirmarAsignacion(@data.nPlanCod)">Confirmar<i class="entypo-thumbs-up"></i></button>
+                                </div>
+                            }
+                            @*else if (data.nEstado == 1 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO)
+                                {
+                                    <div class="album-images-count">
+                                        <strong>@data.oReponsablePlanAccion.cConfrimados</strong>
+                                    </div>
+                                }*@
+                            else
+                            {
+                                if (data.nEstado == 1 && Convert.ToString(data.oReponsablePlanAccion.cUserConfrimados).Contains(usuario.cUser) == true)
+                                {
+                                    <div class="album-images-count">
+                                        <strong>Confirmado</strong>
+                                    </div>
+                                }
+
+                                if (data.nEstado == 2 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO)
+                                {
+                                    <div class="album-images-count" style="padding: 6px 0px 0px 5px">
+                                        <button id="btnImplementado" type="button" class="btn btn-primary btn-sm btn-block btn-icon" onclick="javascript:ConfirmarImplementacion(@data.nPlanCod)">Finalizar<i class="entypo-check"></i></button>
+                                    </div>
+                                }
+                            }
+
+
+                            if (usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO)
+                            {
+                                <div class="album-options">
+                                    <a href="javascript:ReasignarResponsable(@data.oDatosRiesgo.nNroRiesgo, @data.nPlanCod)" title="Reasignar responsable"><i class="entypo-arrows-ccw"></i></a>
+                                </div>
+                                <div class="album-options">
+                                    <a href="javascript:MostrarResponsables('@data.oReponsablePlanAccion.cUserResponsable')" title="Usuarios responsables"><i class="entypo-users"></i></a>
+                                </div>
+                                <div class="album-options">
+                                    <a href="javascript:HistorialFechaImplementacion(@data.nPlanCod)" title="Fecha de implemntación"><i class="entypo-calendar"></i></a>
+                                </div>
+                            }
+                        }
+                    </footer>
+                </article>
+            </div>
+        }
+    }
+    else
+    {
+        @*<div class="row">*@
+        <div class="col-md-12 text-center">
+            <p class="text-primary">No se implementaron encontr&oacute; informaci&oacute;n de planes de acci&oacute;n</p>
+        </div>
+        @*</div>*@
+    }
+</div>
+
+
+@if (Model.resultado.Count() > 0)
+{
+    @*<div class="container">*@
+    <div class="row justify-content-end">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="@(Model.pagina_actual > 1 ? "page-item": "page-item disabled")">
+                    <a class="page-link" href="javascript:ListaPlanesAccion($('#inBuscar').val(), @(Model.pagina_actual > 1 ? (Model.pagina_actual - 1): 1))" tabindex="-1">Anterior</a>
+                </li>
+                @for (int i = 1; i <= Model.total_paginas; i++)
+                {
+                    <li class="@(i == Model.pagina_actual ? "page-item active" : "page-item")">
+                        <a class="page-link" href="javascript:ListaPlanesAccion($('#inBuscar').val(), @i)">@i</a>
+                    </li>
+                }
+                <li class="@(Model.pagina_actual < Model.total_paginas ? "page-item" : "page-item disabled")">
+                    <a class="page-link" href="javascript:ListaPlanesAccion($('#inBuscar').val(),@(Model.pagina_actual < Model.total_paginas ? (Model.pagina_actual + 1) : (Model.total_paginas - 1)) )" onclick="">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    @*</div>*@
+
+}

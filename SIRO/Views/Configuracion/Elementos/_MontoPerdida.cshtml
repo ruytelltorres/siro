@@ -1,0 +1,79 @@
+﻿
+<div class="panel panel-primary panel-table">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Gestionar Monto de P&eacute;rdida</h3>
+            <span>Gestiona los montos de p&eacute;rdida para el nivel de riesgo inherente</span>
+        </div>
+    </div>
+    <div class="panel-body" style="background:#fff">
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label class="control-label" for="selProbabilidad">Probabilidad</label>
+                <select id="selProbabilidad" class="selectboxit" data-size="8" data-first-option="false"></select>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label class="control-label" for="selImpacto">Impacto</label>
+                <select id="selImpacto" class="selectboxit" data-size="8" data-first-option="false"></select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div id="conten-tbl-montos-perdida"></div>
+        </div>
+
+    </div>
+    <div class="panel-footer" style="padding-left:30px; padding-right:30px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary btn-block btn-icon" onclick="$('#modal-registro-monto-perdida').modal('show');" disabled>Nuevo Monto<i class="entypo-plus-squared"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-registro-monto-perdida" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+                <h4>Nuevo Monto de P&eacute;rdida</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="inMontoPerdida" class="control-label">Monto de P&eacute;rdida</label>
+                            <input class="form-control text-right" id="inMontoPerdida" placeholder="S/ 00.00" onkeypress="return val_09D(event);" maxlength="15" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inDescCese" class="control-label">Rese&ntilde;a del Cese</label>
+                            <textarea class="form-control scrolltextarea" id="inDescCese" data-validate="minlength[10]" rows="5" placeholder="(Se breve) Descripcion del Cese" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-default" id="btnCerrar" data-dismiss="modal">Cerrar</button>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" id="btnRegMontoPerdida">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/numeral/numeral.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/config.element.monto.perdida.js")"></script>

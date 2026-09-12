@@ -1,0 +1,74 @@
+﻿
+<div class="panel panel-primary panel-table">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h3>Proceso de las &Aacute;reas</h3>
+            <span>Gestiona los procesos correspondiente al &aacute;rea seleccionado</span>
+        </div>
+    </div>
+    <div class="panel-body" style="background:#fff">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="selAreasProcesos" class="control-label">Área</label>
+                <select id="selAreasProcesos" class="select2" style="width:100%"></select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div id="content-tbl-procesos-area-gestion"></div>
+        </div>
+    </div>
+    <div class="panel-footer" style="padding-right:30px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-left">
+                </div>
+                <div class="pull-right">
+                    <button id="btnAgregarProceso" type="button" class="btn btn-primary btn-block btn-icon">Agregar<i class="entypo-plus-squared"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade custom-width" id="modal-registro-subprocesos-areas" data-backdrop="static">
+    <div class="modal-dialog" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+                <h4>Subproceso</h4>
+            </div>
+            <div class="modal-body">
+
+                <div id="tbl-subprocesos-area-gestion"></div>
+                <hr />
+                <div class="row" id="footer-gestion-subprocesos">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="inSubProcesoNombre" class="control-label"><strong>Sub Proceso</strong></label>
+                            <input type="text" id="inSubProcesoNombre" name="inSubProcesoNombre" class="form-control" maxlength="500" placeholder="Nombre del subproceso" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="inSubProcesoAbrev" class="control-label"><strong>C&oacute;digo</strong></label>
+                            <input type="text" id="inSubProcesoAbrev" name="inSubProcesoAbrev" class="form-control" maxlength="10" placeholder="Abreviatura del Subproceso" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-default" id="btnCancelarRegSubproceso" data-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" id="btnActSubProceso">Actualizar</button>
+                    <button type="button" class="btn btn-primary" id="btnNuevoSubProceso">Nuevo</button>
+                    <button type="button" class="btn btn-primary" id="btnRegSubProceso">Guardar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Assets/js/siro/config.element.procesos.js")"></script>

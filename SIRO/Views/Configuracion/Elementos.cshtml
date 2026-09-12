@@ -1,0 +1,88 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Configuración de Elementos";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var goUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+<div id="wizardConfig" class="tabs-vertical-env">
+    <!-- available classes "right-aligned" -->
+    <ul style="background: #FFF">
+        <li class="active"><a href="#TabProcesos" data-toggle="tab">Procesos</a></li>
+        <li><a href="#TabControlArea" data-toggle="tab">Controles del riesgo</a></li>
+        <li><a href="#TabCausaRiesgo" data-toggle="tab">Causas del Riesgo</a></li>
+        <li><a href="#TabMontoPerdida" data-toggle="tab">Monto de P&eacute;rdida</a></li>
+        <li><a href="#TabCriterioEval" data-toggle="tab">Criterios de Evaluaci&oacute;n</a></li>
+        <li><a href="#TabConfigIncentivo" data-toggle="tab">Configuraci&oacute;n de Incentivo</a></li>
+        @*<li><a href="#v-evaluaciones" data-toggle="tab">Evaluaciones</a></li>*@
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="TabProcesos">
+            @Html.Partial("Elementos/_Procesos")
+        </div>
+        <div class="tab-pane" id="TabControlArea">
+                <div class="panel panel-primary panel-table">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h3>Gestionar Controles de las &Aacute;reas</h3>
+                            <span>Gestiona los controles correspondiente al &aacute;rea seleccionado</span>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="background:#fff">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="selAreasControl" class="control-label">Área</label>
+                                <select id="selAreasControl" class="select2" style="width:100%"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="selProcesosControl" class="control-label">Procesos</label>
+                                <select id="selProcesosControl" class="select2" style="width:100%"></select>
+                            </div>
+                        </div>
+                        <div id="content-tbl-controles-area-gestion"></div>
+
+                    </div>
+                    <div class="panel-footer" style="padding-right:30px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button id="btnAgregarControl" type="button" class="btn btn-primary btn-block btn-icon">Agregar<i class="entypo-plus-squared"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="tab-pane" id="TabCausaRiesgo">
+            @Html.Partial("Elementos/_Causas")
+        </div>
+
+        <div class="tab-pane" id="TabMontoPerdida">
+            @Html.Partial("Elementos/_MontoPerdida")
+        </div>
+
+        <div class="tab-pane" id="TabCriterioEval">
+            @Html.Partial("Elementos/_CriterioEvaluacion")
+        </div>
+
+        <div class="tab-pane" id="TabConfigIncentivo">
+            @Html.Partial("Elementos/_Incentivo")
+        </div>
+    </div>
+
+</div>
+
+
+
+<script src="@Url.Content("~/Content/assets/js/jquery.bootstrap.wizard.min.js")"></script>
+<script src="@Url.Content("~/Content/assets/js/siro/config.config.elementos.js")"></script>
+
+
+
+

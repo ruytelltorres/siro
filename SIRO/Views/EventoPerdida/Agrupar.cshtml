@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Agrupar de Evento de Pérdida";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Agrupar Evento de P&eacute;rdida</h3>
+                    <span>Gestione las agrupaciones de los evento de p&eacute;rdida</span>
+                </div>
+            </div>
+            <div class="panel-body" style="background:#fff">
+                <div class="row" style="display:flex; align-items:center;">
+                    <div class="col-md-8">
+                        <div class="dataTables-mostrar-registros" style="display:flex; align-items:center; gap:6px; height:34px;">
+                            <label style="margin:0; font-weight:normal;">Mostrar</label>
+                            <select id="selMostrarRegistros" class="form-control input-sm" style="width:75px; display:inline-block; height:34px;">
+                                <option value="5">5</option>
+                                <option value="10" selected="selected">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <label style="margin:0; font-weight:normal;">registros</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <div class="search-form-full">
+                            <div class="form-group" id="content-busqueda" style="margin-bottom:0;">
+                                <input type="text" class="form-control" id="inBuscar" placeholder="Buscar" style="height:34px;" />
+                                <i class="entypo-search"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="content-tbl-evento-perdida-agrupar"></div>
+
+            </div>
+            @*<div class="panel-footer" style="padding-right:30px">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <button id="btnGenerarReporte" type="button" class="btn btn-primary btn-block btn-icon">Generar<i class="entypo-export"></i></button>
+                            </div>
+                            <div class="pull-right">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade custom-width" id="modal-agrupar-evento" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+                <h3 class="modal-title">Agrupar Evento</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        @*<label class="control-label">C&oacute;digo de la evaluaci&oacute;n</label>*@
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inEventoAgrupa" placeholder="EP-0000000" maxlength="10">
+                            @*<input type="text" id="inEventoAgrupa" class="form-control typeahead" data-remote="./ListarEventosAgrupar" placeholder="Randomized Output" />*@
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" id="btnGrabarAgrupacion" disabled>Añadir</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <strong>Lista de Eventos Agrupados</strong>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="content-tbl-eventos-agrupados"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+                <div class="pull-right">
+                    @*<button type="button" class="btn btn-primary" id="btnAddPlanAccion">Grabar</button>
+                        <button type="button" class="btn btn-primary" id="btnUpdPlanAccion">Grabar</button>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/siro/eventoperdida.lista.agrupacion.js")"></script>

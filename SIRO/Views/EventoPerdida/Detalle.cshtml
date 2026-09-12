@@ -1,0 +1,264 @@
+﻿@using System.Text.RegularExpressions;
+@using SIRO.Utils.Constantes;
+
+@{
+    ViewBag.Title = "Detalle del Evento";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Detalle del Evento de P&eacute;rdida</h3>
+                    <span>Se muestra los detalles del evento de p&eacute;rdida</span>
+                </div>
+                @*<div class="panel-options">
+                    <a href="javascript:VerGrupoEvento(@Model.oEventoPerdida.oDatosRiesgo.nNroRiesgo)" data-toggle="modal" data-target="#sample-modal-dialog-2" class="bg"><i class="fa fa-object-group"></i></a>
+                </div>*@
+            </div>
+            <div class="panel-body" style="background:#fff">
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Descripci&oacute;n del Evento de P&eacute;rdida</label>
+                        <div class="col-md-6">
+                            <p class="text-primary">@Model.oEventoPerdida.oDatosRiesgo.cRiesgoIdentiticado</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Medidas Correctivas</label>
+                        <div class="col-md-6">
+                            <p class="text-primary">@Model.oEventoPerdida.cMedidasCorrectivas</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Acciones Realizadas</label>
+                        <div class="col-md-6">
+                            <p class="text-primary">@Model.oEventoPerdida.cAccionesRealizada</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Descripci&oacute;n Corta</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary"></p>
+                            </div>
+                            @if (!String.IsNullOrEmpty(Model.oEventoPerdida.cGrupoEvento))
+                            {
+                                <label class="col-md-3 control-label">Agrupado con</label>
+                                <div class="col-md-9">
+                                    <p class="text-primary">@Model.oEventoPerdida.cGrupoEvento</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Clase Evento P&eacute;rdida</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oClasesEventoPerdida.cDescClasEvento</p>
+                            </div>
+                            <label class="col-md-2 control-label">Sub Clase Evento P&eacute;rdida</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oClasesEventoPerdida.oSubClaseEventoPerdida.cDescSubClasEvento</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Fecha Ocurrencia</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@Convert.ToDateTime(Model.oEventoPerdida.dFechaOcurrencia).ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <label class="col-md-2 control-label">Fecha de Descubrimiento</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@Convert.ToDateTime(Model.oEventoPerdida.dFechaDescubrimiento).ToString("dd/MM/yyyy")</p>
+                            </div>
+                            <label class="col-md-2 control-label">Fecha Reg. Contable</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@Convert.ToDateTime(Model.oEventoPerdida.dFechaRegCont).ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Agencia</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oDatosRiesgo.oAgencias.cAgeDescripcion</p>
+                            </div>
+                            <label class="col-md-2 control-label">&Aacute;rea</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oDatosRiesgo.oAreas.cAreaDescripcion</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Linea Negocio</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oLineaNeg.cDescLineaNeg</p>
+                            </div>
+                            <label class="col-md-2 control-label">Sub Linea Neg.</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oLineaNeg.oSubLineaNeg.cDescSubLineaNeg</p>
+                            </div>
+                            <label class="col-md-2 control-label">Cobertura</label>
+                            <div class="col-md-2">
+                                <p class="text-primary"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Proceso</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oDatosRiesgo.oProceso.cDescProceso</p>
+                            </div>
+                            <label class="col-md-2 control-label">Sub Proceso</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@Model.oEventoPerdida.oDatosRiesgo.oProceso.oSubProceso.cDescSubProceso</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Cuentas Contables</label>
+                        <div class="col-md-7">
+                            @if (Model.oLstCtaContEvento.Count > 0)
+                            {
+                                <table id="tbl-cta-contable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center text-primary" width="15%">C&oacute;digo</td>
+                                            <td class="text-primary" width="85%">Descripci&oacute;n</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ foreach (var cuentas in Model.oLstCtaContEvento)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-primary text-center">@cuentas.Codigo</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary">@cuentas.cCtaContDesc.Substring(Convert.ToInt32(cuentas.cCtaContDesc.IndexOf("]")) + 1)</p>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p class="text-primary">No se detallaron cuentas para el evento de p&eacute;rdida</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Monto Bruto</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@ConstGeneral.Get.PenSimbolo((int)Moneda.Soles) @String.Format("{0:n}", Model.oEventoPerdida.nMontoBruto)</p>
+                            </div>
+                            <label class="col-md-2 control-label">P&eacute;rdida Neta</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@ConstGeneral.Get.PenSimbolo((int)Moneda.Soles) @String.Format("{0:n}", Model.oEventoPerdida.nPerdidaNeta)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Monto P&eacute;rdida</label>
+                        <div class="col-md-9">
+                            <div class="col-md-2">
+                                <p class="text-primary">@ConstGeneral.Get.PenSimbolo(Convert.ToInt32(Model.oEventoPerdida.cPenMontoPerdida))  @String.Format("{0:n}", Model.oEventoPerdida.nMontoPerdida)</p>
+                            </div>
+                            <label class="col-md-2 control-label">Monto Recuperado</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@ConstGeneral.Get.PenSimbolo(Convert.ToInt32(Model.oEventoPerdida.cPenMontoRecup)) @String.Format("{0:n}", Model.oEventoPerdida.nMontoRecup)</p>
+                            </div>
+                            <label class="col-md-2 control-label">Monto Provisi&oacute;n</label>
+                            <div class="col-md-2">
+                                <p class="text-primary">@ConstGeneral.Get.PenSimbolo(Convert.ToInt32(Model.oEventoPerdida.cPenMontoProvision)) @String.Format("{0:n}", Model.oEventoPerdida.nMontoProvision)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Gastos</label>
+                        <div class="col-md-7">
+                            @if (Model.oLstGastosEvento.Count > 0)
+                            {
+                                <table id="tbl-cta-contable" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td class="text-center text-primary" width="70%">Concepto</td>
+                                            <td class="text-center text-primary" width="15%">Moneda</td>
+                                            <td class="text-center text-primary" width="15%">Monto</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ foreach (var gasto in Model.oLstGastosEvento)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <p class="text-primary">@gasto.Concepto</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary text-center">@ConstGeneral.Get.PenDescripcion(gasto.Moneda)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-primary text-center">@String.Format("{0:n}", gasto.Monto)</p>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p class="text-primary">No se detallaron gastos para el evento de p&eacute;rdida</p>
+                            }
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-primary" id="btnEliminarEventoPerdida">Eliminar</button>
+                            @if (Model.oEventoPerdida.bGrupo == true)
+                            {
+                                <button type="button" class="btn btn-primary" id="btnEventosAgrupados">Ver Grupo</button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#btnEventosAgrupados").click(function (e) {
+        e.preventDefault();
+        var param = { evento: base64_encode(@Model.oEventoPerdida.oDatosRiesgo.nNroRiesgo) };
+        $.fn.Conexion({
+            direccion: "/RiesgoOperacional/DevolverVistaParam",
+            datos: { Vista: "ReporteEventosAgrupados", Controlador: "EventoPerdida", Parametros: JSON.stringify(param) },
+            terminado: function (data) {
+                window.location = data.url;
+            },
+        });
+    });
+
+
+</script>

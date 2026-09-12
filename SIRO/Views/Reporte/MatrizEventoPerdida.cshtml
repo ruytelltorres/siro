@@ -1,0 +1,56 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@{
+    ViewBag.Title = "Reporte - Matriz de evento de pérdida";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius" data-collapsed="0">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Matriz de riesgo para evento de p&eacute;rdida</h4>
+                <span>Genere el reporte de matriz de los eventos de p&eacute;rdida</span>
+            </div>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse" class="btn-panel-filter" role="button" title="Mostrar u ocultar filtros" aria-label="Mostrar u ocultar filtros"><i class="fa fa-filter" aria-hidden="true"></i></a>
+                @*<a href="javascript:CargarDatosTabla()"><i class="entypo-arrows-ccw"></i></a>*@
+
+                <button id="btnGenerarReporte" type="button" class="btn btn-primary btn-block btn-icon">Generar Reporte <i class="fa fa-file-excel-o"></i></button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <input class="form-control text-center datepicker" id="inDesde" data-format="dd/mm/yyyy" placeholder="Desde" aria-label="Desde" autocomplete="off" />
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control text-center datepicker" id="inHasta" data-format="dd/mm/yyyy" placeholder="Hasta" aria-label="Hasta" autocomplete="off" />
+                        </div>
+
+                        @*<button id="btnProcesar" type="button" class="btn btn-primary btn-icon">Procesar</button>
+                    <button type="button" id="btnCargar" class="btn btn-primary">
+                        <i class="fa fa-download" aria-hidden="true"></i> Cargar Datos
+                    </button>*@
+
+                        <button type="button" id="btnGenerarMatriz" class="btn btn-primary">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                            Consultar Datos
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive" id="content-tbl-matriz-evento-perdida"></div>
+    </div>
+
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/siro/reporte.matriz.evento.perdida.js")"></script>

@@ -1,0 +1,107 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio;
+
+@model List<Menu>
+
+<ul id="main-menu" class="main-menu">
+    <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+    <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+    @foreach (Menu menu in Model)
+    {
+        if (menu.oListaMenu.Count() > 0)
+        {
+            <li title="@menu.cDescripcion">
+                <a href="#"><i class="@menu.cIcono"></i><span class="title">@menu.cTitulo</span></a>
+                <ul>
+                    @_SubMenu(menu.oListaMenu)
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>
+                @{string des = "#" + @menu.cDescripcion;}
+                <a href="@menu.cDescripcion" data-url="@menu.cUrl"><i class="@menu.cIcono"></i>@menu.cDescripcion<span class="fa arrow"></span></a>
+            </li>
+        }
+    }
+    @*<li title="Conozce más sobre la nueva version del Sistema de Gestión de Riesgo Operacional">
+            <a href="#"><i class="entypo-info"></i><span class="title">Acerca de SIRO</span></a>
+            <ul>
+                <li title="Descargue el manual del sistema">
+                    <a href="~/Documentos/Manuales/Manual.pdf" target="_blank"><i class="entypo-book"></i>Manual del Usuario</a>
+                </li>
+            </ul>
+        </li>*@
+</ul>
+
+@helper _SubMenu(List<Menu> L)
+{
+    foreach (Menu _menu in L)
+    {
+        if (_menu.oListaMenu.Count() > 0)
+        {
+            <li title="@_menu.cDescripcion">
+                <a href="#"><i class="@_menu.cIcono"></i><span class="title">@_menu.cTitulo</span></a>
+                <ul>
+                    @_SubMenu(_menu.oListaMenu)
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>
+                @{
+                    string _modelo = "Home";
+                    string _controlador = "Index";
+                    string _parametro = "";
+                    int sepadador = 0;
+                    int sepParam = 0;
+                    string des = "/" + @_menu.cUrl;
+                    //string des = "/" + @_menu.cDescUrl;
+                    sepadador = @_menu.cUrl.IndexOf("/");
+                }
+                @if (sepadador > 0)
+                {
+                    _modelo = @_menu.cUrl.Substring(0, sepadador);
+                    _controlador = @_menu.cUrl.Substring(sepadador + 1, @_menu.cUrl.Length - (sepadador + 1));
+
+                    sepParam = _controlador.IndexOf("?");
+                }
+                @if (sepParam > 0)
+                {
+                    _parametro = _controlador.Substring(sepParam, _controlador.Length - sepParam);
+                    _controlador = _controlador.Substring(0, _controlador.Length - (sepParam + 2));
+                    _parametro = Url.Action(_controlador, _modelo) + _parametro;
+
+                    <a href="@des" data-url="@_parametro" title="@_menu.cDescripcion"><i class="@_menu.cIcono"></i><span class="title">@_menu.cTitulo</span></a>
+                }
+                else
+                {
+                    <a href="@des" data-url="@Url.Action(_controlador, _modelo)" title="@_menu.cDescripcion">
+                    @*<a href="javascript:MenuRedirect(@_controlador, @_modelo)" title="@_menu.cDescripcion">*@
+                        <i class="@_menu.cIcono"></i>
+                        <span class="title">@_menu.cTitulo</span>
+                    </a>
+                }
+            </li>
+        }
+    }
+
+}
+
+
+@*<script type="text/javascript">
+    function MenuRedirect(_controlador, _vista) {
+        $.fn.Conexion({
+            direccion: '/RiesgoOperacional/DevolverVista',
+            bloqueo: true,
+            mensaje: 'Cargando Información. Por favor espere.',
+            className: 'modal-centered',
+            datos: { Vista: _vista, Controlador: _controlador },
+            terminado: function (data) {
+                window.location = data;
+            }
+        });
+    }
+</script>*@
+

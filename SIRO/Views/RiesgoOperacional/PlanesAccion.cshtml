@@ -1,0 +1,159 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+
+@{
+    ViewBag.Title = "Riesgo Operacional - Planes de acción";
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+</script>
+
+<div class="row">
+    @*<div class="col-md-12 col-sm-12">*@
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Planes de Acci&oacute;n</h4>
+                <span>Módulo para la gesti&oacute;n de los planes de acci&oacute;n asignados</span>
+            </div>
+            <div class="panel-options">
+                @*<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>*@
+                <a href="#" data-rel="collapse"><i class="fa fa-filter"></i></a>
+                @*<a href="javascript:CargarDatosTabla()"><i class="entypo-arrows-ccw"></i></a>*@
+            </div>
+        </div>
+        <div class="panel-body" style="background:#fff">
+            <div class="row" style="display:flex; align-items:center;">
+                <div class="col-md-9">
+                    <div class="dataTables-mostrar-registros" style="display:flex; align-items:center; gap:6px; height:34px;">
+                        <label style="margin:0; font-weight:normal;">Mostrar</label>
+                        <select id="selMostrarRegistros" class="form-control input-sm" style="width:75px; display:inline-block; height:34px;">
+                            <option value="5">5</option>
+                            <option value="10" selected="selected">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <label style="margin:0; font-weight:normal;">registros</label>
+                    </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <div class="search-form-full">
+                        <div class="form-group" id="content-busqueda" style="margin-bottom:0;">
+                            <input type="text" class="form-control" id="inBuscar" placeholder="Buscar por código del plan de acción" onkeypress="return val_09(event);" style="height: 34px; margin-top: 0" />
+                            <i class="entypo-search"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="content-planes-accion"></div>
+            </div>
+        </div>
+
+    </div>
+    @*</div>*@
+</div>
+
+<div class="modal fade custom-width" id="modal-fecha-implementa" data-backdrop="static">
+    <div class="modal-dialog" style="width: 30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4></h4>
+            </div>
+            <div class="modal-body">
+                <div id="content-fechas" data-cod="100">
+
+                    <div class="row" id="seccion-insert-fecha">
+                        <div class="col-md-12">
+                            <p class="text-danger">Marcar el check en caso que la fecha a ingresar sera considerado como la fecha de implementaci&oacute;n</p>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="checkbox checkbox-replace color-red">
+                                <input type="checkbox" id="chkFiltro" @*onclick="HabilitarControles(eval(this));"*@>
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inFechaImplementacion" data-mask="date" placeholder="Fecha Implementación">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" id="btnAddFechaImplement" disabled>Agregar</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="country-list" id="lista-fecha-implemetacion" style="padding: 0; width: 100%"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade custom-width" id="modal-reasignacion-responsable" data-backdrop="static">
+    <div class="modal-dialog" style="width: 50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4></h4>
+            </div>
+            <div class="modal-body" data-cod-plan="0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>&nbsp;&nbsp;&nbsp;Responsable</legend>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    @*<label for="selResponsable" class="control-label">Responsable</label>*@
+                                    <select id="selResponsable" class="selectboxit" data-first-option="false"></select>
+                                    @*<select id="selResponsable" class="select2" data-allow-clear="true" style="width:100%" tabindex="2"></select>*@
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>&nbsp;&nbsp;&nbsp;Responsable Re-asignado</legend>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="selAreasAsignado" class="control-label">&Aacute;reas</label>
+                                    <select id="selAreasAsignado" class="select2" data-allow-clear="true" style="width:100%" tabindex="2">
+                                        <option></option>
+                                        <optgroup label="Lista Áreas">
+                                            @foreach (var areas in Model)
+                                            {
+                                                <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label for="selUserAsignado" class="control-label">Usuario</label>
+                                    <select id="selUserAsignado" class="select2" style="width:100%;" placeholder="Selecccione el usuario"></select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnReasignar" type="button" class="btn btn-primary btn-icon">Reasignar<i class="entypo-arrows-ccw"></i></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/siro/riesgoope.plan.accion.js")"></script>
+

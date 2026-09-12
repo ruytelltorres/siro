@@ -1,0 +1,342 @@
+﻿
+@{
+    ViewBag.Title = "Reporte (miselanea)";
+}
+<style>
+    .alert {
+        padding: 15px;
+        margin-bottom: 10px !important;
+        border: 1px solid transparent;
+        border-radius: 3px;
+    }
+</style>
+
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h3>Reporte (miscelanea)</h3>
+                <span>Genere distintos reportes seg&uacute;n opci&oacute;n.</span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="alert alert-default">
+                        <strong>Riesgos operacionales rechazados:</strong>
+                        <p>Generar el reporte de todos los riesgos rechazados por el analista de riesgo operaconal</p>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="inRechazoDesde" class="control-label">Desde</label>
+                            <input class="form-control text-center" id="inRechazoDesde" data-mask="date" placeholder="01/01/1999" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="inRechazoHasta" class="control-label">Hasta</label>
+                            <input class="form-control text-center" id="inRechazoHasta" data-mask="date" placeholder="01/01/1999" />
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <button id="btnGenerarExcelRechazos" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="alert alert-default">
+                        <strong>Riesgos operacionales por estado de plan de acci&oacute;n:</strong>
+                        <p>Genere el reporte de acuerdo al estado del Plan de Acci&oacute;n</p>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="selEstadoPlanAccion" class="control-label">Estado plan de acción</label>
+                            <select id="selEstadoPlanAccion" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                                <option>Seleccione una opci&oacute;n</option>
+                                @foreach (var incentivo in Model.oLstEstados)
+                                {
+                                    <option value="@incentivo.nConsValor"> @incentivo.cConsDescripcion</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+
+                        <button id="btnGenerarPlanAccionEstado" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="panel-group joined" id="accordion-test-2">
+                <!--Riesgos Operacionales-->
+                <div class="panel panel-default" style="border-radius:0px">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="padding: 5px 10px;">
+                            <a data-toggle="collapse" data-parent="#reporte-varios-riesgo-operacional" href="#sec-riesgo-operacional">Riesgos Operacionales</a>
+                        </h4>
+                    </div>
+                    <div id="sec-riesgo-operacional" class="panel-collapse collapse">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th>Riesgos Rechazados</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                <tr>
+                                    <td>
+
+                                        <form class="form-horizontal" role="form" id="frmRechazosRiesgos"></form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th>Planes de Acci&oacute;n</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                <tr>
+                                    <td>
+
+                                        <form class="form-horizontal" role="form"></form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th>Gestion de Incentivos</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-default">
+                                            <strong>Notas del Reporte:</strong>
+                                            <p>Genere el reporte de acuerdo al motivo del incentivo</p>
+                                        </div>
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="selMotivoIcentivo" class="col-md-1 control-label">Motivo del Incentivo</label>
+                                                <div class="col-md-6">
+                                                    <select id="selMotivoIcentivo" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                                                        <option>Seleccione una opci&oacute;n</option>
+                                                        @foreach (var incentivo in Model.oLstIncentivos)
+                                                        {
+                                                            <option value="@incentivo.nConsValor"> @incentivo.cConsDescripcion</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-2">
+                                                    <button id="btnGenerarIncentivoMotivo" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-default">
+                                            <strong>Notas del Reporte:</strong>
+                                            <p>Genera el reporte de acuerdo al monto ingresado del incentivo</p>
+                                        </div>
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="inMontoIncentivo" class="col-md-1 control-label">Monto del Incentivo</label>
+                                                <div class="col-md-1">
+                                                    <input class="form-control text-center" id="inMontoIncentivo" placeholder="0.00" onkeypress="return val_09D(event);" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-2">
+                                                    <button id="btnGenerarIncentivoMonto" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <!--Evaluaciones-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="padding: 5px 10px">
+                            <a data-toggle="collapse" data-parent="#reporte-varios-evaluacion" href="#sec-evaluacion">Evaluaciones</a>
+                        </h4>
+                    </div>
+
+                    <div id="sec-evaluacion" class="panel-collapse collapse">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th>Evaluaciones - Reportes</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                @*<tr>
+                                        <td>
+                                            <div class="alert alert-info">
+                                                <strong>¡Importante!</strong>
+                                            </div>
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    <label for="inDesdeA" class="col-md-1 control-label">Desde</label>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control text-center" id="inDesdeA" data-mask="date" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inHastaA" class="col-md-1 control-label">Hasta</label>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control text-center" id="inHastaA" data-mask="date" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-1 col-md-2">
+                                                        <button id="btnGenerarEventoPerdidaAgrupados" type="button" class="btn btn-primary  btn-icon">Exportar<i class="entypo-export"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--Eventos de Perdida-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="padding: 5px 10px">
+                            <a data-toggle="collapse" data-parent="#reporte-varios-sec-2" href="#sec-2" class="collapsed">
+                                Eventos de P&eacute;rdida
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="sec-2" class="panel-collapse collapse">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th>Evento de P&eacute;rdida Agrupado</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-info">
+                                            <strong>¡Importante!</strong>
+                                        </div>
+
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="inDesdeA" class="col-md-1 control-label">Desde</label>
+                                                <div class="col-md-3">
+                                                    <input class="form-control text-center" id="inDesdeA" data-mask="date" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inHastaA" class="col-md-1 control-label">Hasta</label>
+                                                <div class="col-md-3">
+                                                    <input class="form-control text-center" id="inHastaA" data-mask="date" placeholder="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                                </div>
+                                            </div>
+
+                                            @*<div class="form-group">
+                                                    <div class="col-lg-offset-2 col-lg-10">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox"> No cerrar sesión
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-2">
+                                                    <button id="btnGenerarEventoPerdidaAgrupados" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th>Eventos de P&eacute;rdida mayor igual &oacute; menores a 1000:</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-info">
+                                            <strong>¡Importante!</strong>
+                                        </div>
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="selCondicionReporte" class="col-md-1 control-label">Filtro</label>
+                                                <div class="col-md-3">
+                                                    <select id="selCondicionReporte" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                                                        <option>Seleccione una opci&oacute;n</option>
+                                                        <option value=">= 1000"> Mayores &oacute; iguales a 1000</option>
+                                                        <option value="< 1000"> Menores a 1000</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-1 col-md-2">
+                                                    <button id="btnGenerarEventoPerdidaMayorMenor" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr><th colspan="3">Eventos de P&eacute;rdida Consolidado</th></tr>
+                            </thead>
+                            <tbody style="background-color: #FFFFFF">
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-info">
+                                            <strong>¡Importante!</strong>
+                                            <p class="text-info">
+                                                <ul class="text-info">
+                                                    <li>Pesta&ntilde;a 1: Matriz Evento de P&eacute;rdida Mayores o iguales a 1000</li>
+                                                    <li>Pesta&ntilde;a 2: Matriz Eventos de P&eacute;rdida Menores a 1000</li>
+                                                    <li>Pesta&ntilde;a 3: Matriz Eventos de P&eacute;rdida Agrupados</li>
+                                                </ul>
+                                            </p>
+                                        </div>
+                                        <form class="form-horizontal" role="form">
+                                            <div class="col-md-offset-1 col-md-2">
+                                                <button id="btnGenerarEventoPerdidaConsol" type="button" class="btn btn-primary btn-icon">Exportar<i class="entypo-export"></i></button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/numeral/numeral.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/reporte.varios.js")"></script>

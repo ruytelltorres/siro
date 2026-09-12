@@ -1,0 +1,179 @@
+﻿@using CMACMaynas.Web.SIRO.Negocio
+@using SIRO.Utils.Constantes
+@{
+    ViewBag.Title = "Riesgo Operacional | Detalle";
+
+    Usuario usuario = (Usuario)Session["Usuario"];
+}
+<script type="text/javascript">
+    var gUsuario = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(usuario));
+    var gRiesgo = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+</script>
+
+
+<div class="row">
+    <div class="panel panel-primary panel-table no-border-radius">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <h4>Detalle del riesgo operacional: <b>@Model.cCodRiesgo</b></h4>
+                @*<span>M&oacute;dulo muestra la informaci&oacute;n principal del riesgo.Haga <a href="#">click aqu&iacute;</a> para m&aacute;s detalle sobre el riesgo.</span>*@
+            </div>
+
+            <div class="panel-options">
+                @if (Model.oProcRiesgo.nConsValor == 0 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO) //Solo el analista de riesgo operacional podra realizar el rechazo o eliminar el riesgo operacional
+                {
+                    <button type="button" class="btn btn-primary btn-icon" id="btnEditarRiesgo">Editar<i class="fa fa-pencil"></i></button>
+                    if (Model.oEstado.nConsValor != 6)
+                    {
+                        <button type="button" class="btn btn-primary btn-icon" id="btnModificarRiesgo">Solicitar modificar<i class="fa fa-pencil-square-o"></i></button>
+                        <button type="button" class="btn btn-danger btn-icon" id="btnRecharRiesgo">Rechazar<i class="fa fa-close"></i></button>
+                    }
+                }
+
+                @if (Model.oProcRiesgo.nConsValor == 5 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO) //Solo el analista de riesgo operacional podra realizar el rechazo o eliminar el riesgo operacional
+                {
+                    <button type="button" class="btn btn-primary btn-icon" id="btnReportePlanAccion">Planes de accion <i class="fa fa-file-excel-o"></i></button>
+                }
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-horizontal form-groups-bordered">
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">C&oacute;digo</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.cCodRiesgo</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Riesgo identificado</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.cRiesgoIdentiticado</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Agencia afectada</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.oAgencia.cAgeDescripcion</p>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">&Aacute;rea afectada</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.oAgencia.oArea.cAreaDescripcion</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Fecha de detecci&oacute;n</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Convert.ToDateTime(Model.dFechaDeteccion).ToString("dd/MM/yyyy")</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Causas del riesgo</label>
+                            <div class="col-md-6">
+                                @{
+                                    string[] lsCausas = Convert.ToString(Model.oCausas.cCausaDesc).Split('|');
+                                    foreach (string lsCausa in lsCausas)
+                                    {
+                                        <p class="text-primary">@lsCausa</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Proceso</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.oProceso.cDescProceso</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Subproceso</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.oProceso.oSubProceso.cDescSubProceso</p>
+                            </div>
+                        </div>
+
+                        @*comentado por mejora del usuario*@
+                        @*<div class="form-group">
+                                <label class="col-md-3 control-label">Control Existente</label>
+                                <div class="col-md-6">
+                                    Control existente @if (String.IsNullOrEmpty(Convert.ToString(Model.oControlAreas.nCodControl)))
+                                    {<spam class="badge badge-secondary">Control no definido</spam>}
+
+                                    <p class="text-primary">@Model.oControlAreas.cControlDescripcion</p>
+                                </div>
+                            </div>*@
+
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Efectos del riesgo</label>
+                            <div class="col-md-6">
+                                <p class="text-primary">@Model.cEfectosRiesgo</p>
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                                <label class="col-md-3 control-label">Datos del Usuario</label>
+                                <div class="col-md-6">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td width="60%"><strong>Nombre</strong></td>
+                                                <td width="40%" class="text-center"><strong>Usuario</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-primary">@Model.oUsuario.cUsuario</td>
+                                                <td class="text-primary" style="text-align:center">@Model.oUsuario.cUser</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>*@
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @*@if (Model.oProcRiesgo.nConsValor == 0 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO) //Solo el analista de riesgo operacional podra realizar el rechazo o eliminar el riesgo operacional
+            {
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" id="btnEditarRiesgo" title="Editar el riesgo operacional">Editar</button>
+                    @if (Model.oEstado.nConsValor != 6)
+                    {
+                        <button type="button" class="btn btn-primary" id="btnModificarRiesgo" title="Solicitar modificacion del riesgo operacional">Modificar</button>
+                        <button type="button" class="btn btn-primary" id="btnRecharRiesgo" title="Rechazar el riesgo operacional">Rechazar</button>
+                    }
+                </div>
+            }*@
+
+        @*@if (Model.oProcRiesgo.nConsValor == 5 && usuario.cRHCargoCod == ConstGeneral.Get.AnalistaRO) //Solo el analista de riesgo operacional podra realizar el rechazo o eliminar el riesgo operacional
+            {
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" id="btnReportePlanAccion" title="Planes de Acción Asignados">Planes de Acción</button>
+                </div>
+            }*@
+
+    </div>
+</div>
+
+<!--Colocal aqui el codigo del modal del detalle-->
+
+
+
+<script src="@Url.Content("~/Content/Assets/js/siro/riesgoope.detalle.js")"></script>

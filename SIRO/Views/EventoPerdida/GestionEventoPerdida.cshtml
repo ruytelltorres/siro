@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "Gestión Evento de Pérdida";
+}
+
+<script type="text/javascript">
+    var gDatosEvento = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.oEventoPerdida));
+</script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Gesti&oacute;n del Evento de P&eacute;rdida</h3>
+                    <span>M&oacute;dulo para el tratamiento del evento de p&eacute;rdida, para ver m&aacute;s detalle del evento de p&eacute;rdida haga <a href="#" onclick="MostrarDetalleEventoPerdida(@Model.oEventoPerdida.oDatosRiesgo.nNroRiesgo)"><strong>click aqu&iacute;</strong></a></span>
+                    @*<span>Gestiona la informaci&oacute;n del evento de p&eacute;rdida registrado</span>*@
+                </div>
+            </div>
+            <div class="panel-body" style="background:#fff">
+                @*<div id="content-evento-perdida"></div>*@
+                <form role="form" class="form-wizard" style="margin-top:0">
+                    <div class="row col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="inMedidasCorrectivas" class="control-label">Medidas Correctivas</label>
+                                <textarea class="form-control scrolltextarea" id="inMedidasCorrectivas" name="inMedidasCorrectivas" data-validate="minlength[10]" rows="5" placeholder="(Opcional) Describa las medidas correctivas realizadas" style="width:100%" tabindex="1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="inAccionesRealizadas" class="control-label">Acciones Realizadas</label>
+                                <textarea class="form-control scrolltextarea" id="inAccionesRealizadas" name="inAccionesRealizadas" data-validate="minlength[10]" rows="5" placeholder="(Opcional) Describa las acciones tomadas" style="width:100%" tabindex="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="row col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="selAgencias" class="control-label">Agencia</label>
+                                <select id="selAgencias" class="select2" data-allow-clear="true" style="width:100%" tabindex="3" required>
+                                    <option></option>
+                                    <optgroup label="Lista de Agencias">
+                                        @{
+                                            foreach (var agencias in Model.oLstAgencia)
+                                            {
+                                                <option value=@agencias.cAgeCod>@agencias.cAgeDescripcion</option>
+                                            }
+                                        }
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="selAreas" class="control-label">&Aacute;rea</label>
+                                <select id="selAreas" class="select2" data-allow-clear="true" style="width:100%" tabindex="4" required>
+                                    <option></option>
+                                    <optgroup label="Lista de Áreas">
+                                        @{
+                                            foreach (var areas in Model.oLstAreas)
+                                            {
+                                                <option value=@areas.cAreaCod>@areas.cAreaDescripcion</option>
+                                            }
+                                        }
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+
+                    @*<div class="row col-md-12">
+                        <div class="col-md-6">
+                            <label for="selLineaNegocio" class="control-label">L&iacute;nea Negocio</label>
+                            <select id="selLineaNegocio" class="selectboxit" data-size="8" data-first-option="false" tabindex="5">
+                                <option>Seleccione una opci&oacute;n</option>
+                                <optgroup label="Línea de Negocio">
+                                    @{
+                                        foreach (var lineaneg in Model.oLstLineaNegocio)
+                                        {
+                                            <option value=@lineaneg.cCodLineaNeg>@lineaneg.cDescLineaNeg</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+
+                            <label for="selSubLineaNegocio" class="control-label">Sub L&iacute;nea Negocio</label>
+                            <select id="selSubLineaNegocio" class="selectboxit" data-size="8" data-first-option="false" tabindex="6"></select>
+                        </div>
+                    </div>*@
+
+                    <div class="row col-md-12">
+                        <div class="col-md-12">
+                            <label for="selCausaRiesgo" class="control-label">Causas</label>
+                            <select id="selCausaRiesgo" class="select2" multiple="multiple" style="width:100%" data-placeholder="Seleccione la(s) causa(s) del riesgo" tabindex="7">
+                                @{
+                                    foreach (var causas in Model.oLstCausas)
+                                    {
+                                        <option value=@causas.cCodCausa>@causas.cCausaDesc</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    @*<div class="row col-md-12" style="margin-top: 1.5%">
+                        <div class="col-md-6">
+                            <label for="selProcesos" class="control-label">Procesos</label>
+                            <select id="selProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="8"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="selSubProcesos" class="control-label">Sub Procesos</label>
+                            <select id="selSubProcesos" class="select2" data-allow-clear="true" style="width:100%" tabindex="9"></select>
+                        </div>
+                    </div>*@
+
+                    <div class="row col-md-12" style="margin-top: 1.5%">
+                        @*<div class="col-md-6">
+                            <label for="selDescCortaEvento" class="control-label">Desc. Corta Evento</label>
+                            <select id="selDescCortaEvento" class="selectboxit" data-size="8" data-first-option="false" tabindex="8">
+                                <option>Seleccione una opci&oacute;n</option>
+                                <optgroup label="Descripción Corta">
+                                    @{
+                                        foreach (var subEvento in Model.oLstSubEventoPerdida)
+                                        {
+                                            <option value=@subEvento.nCodSubTpoEvento>@subEvento.cDescSubTpoEvento</option>
+                                        }
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>*@
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Riesgo Crediticio</label>
+                                <br />
+                                <div class="make-switch switch-small" data-on-label="Si" data-off-label="No">
+                                    <input type="checkbox" id="inRiesgoCrediticio" checked>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Exp. Evento P&eacute;rdida</label>
+                                <br />
+                                <div class="make-switch switch-small" data-on-label="Si" data-off-label="No">
+                                    <input type="checkbox" id="inExpEvenPerdida" checked>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-left">
+                            @*<button type="button" class="btn btn-primary" id="btnEliminarEvaluacion">Eliminar</button>
+                                <button type="button" class="btn btn-primary" id="btnRecharEvaluacion">Rechazar</button>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button id="btnGrabar" type="button" class="btn btn-primary btn-block btn-icon">Guardar<i class="entypo-floppy"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<script src="@Url.Content("~/Content/Assets/js/siro/eventoperdida.gestion.js")"></script>

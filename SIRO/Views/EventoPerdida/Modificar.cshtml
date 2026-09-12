@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Modificar Evento Pérdida";
+}
+<script type="text/javascript">
+    var gModelEvento = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.oEventoPerdida));
+</script>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-primary panel-table">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>Modificar Evento de P&eacute;rdida</h3>
+                    <span>Módulo actualziaci&oacute;n del Evento de P&eacute;rdida</span>
+                </div>
+            </div>
+            <div class="panel-body" style="background:#fff">
+                @Html.Partial("_EventoPerdida");
+            </div>
+            <div class="panel-footer" style="padding-left:30px; padding-right:30px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.oEventoPerdida.bGrupo)
+                        {
+                            <div class="pull-left">
+                                <button id="btnMostrarGrupo" type="button" class="btn btn-primary btn-block btn-icon">Grupo Eventos<i class="fa fa-object-group"></i></button>
+                            </div>
+                        }
+                        <div class="pull-right">
+                            <button id="btnGrabarModificacion" type="button" class="btn btn-primary btn-block btn-icon">Guardar<i class="entypo-floppy"></i></button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="@Url.Content("~/Content/Assets/js/numeral/numeral.js")"></script>
+<script src="@Url.Content("~/Content/Assets/js/siro/eventoperdida.registro.js")"></script>
